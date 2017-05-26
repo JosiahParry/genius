@@ -53,3 +53,5 @@ HUMBLE %>%
 ```
 
 This is my first ever attempt at accessing an API through R (or ever for that matter). As you can see above there are still many bugs. Issues and pull requests are welcome!
+
+These functions were adapted from Jack Schultz's [blog post](https://bigishdata.com/2016/09/27/getting-song-lyrics-from-geniuss-api-scraping/). Thanks man.  
