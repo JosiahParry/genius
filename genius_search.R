@@ -39,7 +39,36 @@ genius_search <- function(artist = NULL, song = NULL, ...) {
 
 # creating a class function
 print.genius_api <- function(x, ...) {
-  cat("<GitHub ",  ">\n", sep = "")
+  cat("<Genius ",  ">\n", sep = "")
   str(x$content)
   invisible(x)
 }
+
+test <- genius_search(artist = "Twenty one pilots", song = "car radio")
+artist <- "twenty one pilots"
+for (hit in test$response$hits) {
+  print(str_detect(hit$result$primary_artist, artist))
+  if (hit$type == "song" && str_detect(hit$result$primary_artist$name, artist) == TRUE) {
+    song_info <- hit$result
+  } 
+  break
+}
+
+
+
+
+song_info <- NULL
+for (hit in test$response$hits) {
+  if (hit == "The Decemberists" & hit$result$title == "Lake Song") {
+    song_info <- hit
+  }
+  break
+}  
+  
+  hit["result"]["primary_artist"]["name"] == artist_name:
+  song_info = hit
+break
+}
+
+test$response$hits$type
+
