@@ -7,7 +7,7 @@ output: html_notebook
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-my_access_token <- "ml7d-06dREg7ZNTrdG2CQ1wfoJ2m1FSP6ZRGIphEj2RRGtY_gpKiCfFFWpeMpTbC"
+my_access_token <- Sys.getenv("my_access_token")
 ```
 
 # geniusR
@@ -40,8 +40,10 @@ sapply(file.path("R",list.files("R")), FUN = source)
 The function should be pretty intuitive. Where the first argument is the artist name, second is the song, and the third is your access token. Below I access Kendrick Lamar's new hit from his album **DAMN.**. 
 
 ```{r, message=FALSE, warning=FALSE}
-HUMBLE <- genius_lyrics(artist = "Kendrick Lamar", song = "HUMBLE", access_token = my_access_token)
+HUMBLE <- genius_lyrics(artist = "Kendrick Lamar", song = "HUMBLE", access_token = Sys.getenv("my_access_token"))
 ```
+
+Let's make some quick variable names, and view it. 
 
 ```{r}
 HUMBLE %>%
