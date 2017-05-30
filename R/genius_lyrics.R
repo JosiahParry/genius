@@ -1,6 +1,4 @@
-library(httr)
-
-genius_lyrics <- function(artist = NULL, song = NULL, access_token = NULL, ...) {
+genius_lyrics <- function(artist = NULL, song = NULL, access_token = NULL, simple = FALSE, ...) {
   base_url <- "http://genius.com/search"
   # headers
   headers <- add_headers(Accept = "application/json",
@@ -41,9 +39,18 @@ genius_lyrics <- function(artist = NULL, song = NULL, access_token = NULL, ...) 
     if (hit$type == "song" && str_detect(hit$result$primary_artist$name,
                                          coll(artist, ignore_case = TRUE)) == TRUE) {
       song_url <- hit$result$url
+      song_title <- hit$result$title
+      song_artist <- hit$result$primary_artist$name
     } 
     break
   }
-  return(genius_url(song_url))
+  if (simple == TRUE) {
+   return(genius_url(song_url))
+  } else {
+    return(genius_url(song_url) %>%
+             mutate(line_num = row_number(),
+                    song = song_title,
+                    artist = song_artist))
+    }
 }
 
