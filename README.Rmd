@@ -1,8 +1,3 @@
----
-output:
-  html_document: default
----
-
 # Overview
 
 This package was created to provide an easy method to access lyrics as text data using the website [Genius](genius.com). 
