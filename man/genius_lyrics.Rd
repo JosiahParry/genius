@@ -4,8 +4,7 @@
 \alias{genius_lyrics}
 \title{Retrieve song lyrics from Genius.com}
 \usage{
-genius_lyrics(artist = NULL, song = NULL, access_token = NULL,
-  simple = FALSE, ...)
+genius_lyrics(artist = NULL, song = NULL)
 }
 \arguments{
 \item{artist}{The quoted name of the artist. Spelling matters, capitalization does not.}
