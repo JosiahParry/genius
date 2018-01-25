@@ -14,6 +14,8 @@ devtools::install_github("josiahparry/geniusR")
 
 ## Song Lyrics
 
+### `genius_lyrics()`
+
 The main function you will be using to acquire song lyrics is `genius_lyrics()`. Supply an artist and a song title as character strings, and voila.
 
 ```{r}
