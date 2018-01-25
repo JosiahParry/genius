@@ -2,56 +2,35 @@
 title: "README"
 author: "Josiah Parry"
 date: "5/26/2017"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-my_access_token <- Sys.getenv("my_access_token")
+```{r}
+library(geniusR)
 ```
 
-# geniusR
 
-Welcome to `geniusR`, an R wrapper for the [Genius](https://genius.com/Genius-about-genius-annotated) API. The functions I created here were to serve my desires for acquiring song lyrics to be used in a tidy text analysis. Since song lyrics are lisenced, the **Genius** API cannot directly provide lyrics to any given song. Therefore, I utilized the search functions of their API to extract song url's and scrape their website for their lyrics. 
+# Overview
 
-## Pre-requisites
 
-Prior to being able to use `geniusR` you will first need to [create an account with Genius](https://docs.genius.com/) to get an API access token. 
+
+This package must be installed from GitHub.
+
+```{r, eval = F}
+#devtools::install_github("josiahparry/geniusR")
+```
 
 ## Using geniusR
 
-Since I just developed these functions today (05.26.17), it isn't a real package yet. You can clone this repo and run each script to get the functions into you environment. Then, getting song lyrics is quite easy.
-
-The main function you will be using to acquire song lyrics is `genius_lyrics()`.
-
-## `genius_lyrics()`
-
-First we will need to load our libraries and the functions to access the api. 
-```{r, message=FALSE, warning=FALSE}
-# Load libraries
-library(tidyverse)
-library(rvest)
-library(stringr)
-
-# Load all functions
-sapply(file.path("R",list.files("R")), FUN = source)
-```
-
-The function should be pretty intuitive. Where the first argument is the artist name, second is the song, and the third is your access token. Below I access Kendrick Lamar's new hit from his album **DAMN.**. 
-
-```{r, message=FALSE, warning=FALSE}
-HUMBLE <- genius_lyrics(artist = "Kendrick Lamar", song = "HUMBLE", access_token = Sys.getenv("my_access_token"))
-```
-
-Let's make some quick variable names, and view it. 
+The main function you will be using to acquire song lyrics is `genius_lyrics()`. Supply an artist and a song title as character strings.
 
 ```{r}
-HUMBLE %>%
-  mutate(song = "HUMBLE.", 
-         album = "DAMN.",
-         artist = "Kendrick Lamar")
+genius_lyrics(artist = "Margaret Glaspy", song = "Memory Street")
 ```
 
-This is my first ever attempt at accessing an API through R (or ever for that matter). As you can see above there are still many bugs. Issues and pull requests are welcome!
+### Notes:
 
-These functions were adapted from Jack Schultz's [blog post](https://bigishdata.com/2016/09/27/getting-song-lyrics-from-geniuss-api-scraping/). Thanks man.  
+As this is my first _"package"_ there will be many issues. Please submit an issue and I will do my best to attend to it. 
+
+There are already issues of which I am present (the lack of error handling). If you would like to take those on, please go ahead and make a pull request. Please contact me on [Twitter](twitter.com/josiahparry).
