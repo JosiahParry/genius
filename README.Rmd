@@ -1,15 +1,11 @@
 ---
-title: "README"
-author: "Josiah Parry"
-date: "5/26/2017"
 output:
-  pdf_document: default
   html_document: default
 ---
 
 # Overview
 
-
+This package was created to provide an easy method to access lyrics as text data using the website [Genius](genius.com). 
 
 This package must be installed from GitHub.
 
