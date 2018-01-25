@@ -6,10 +6,6 @@ output:
   pdf_document: default
   html_document: default
 ---
-```{r}
-library(geniusR)
-```
-
 
 # Overview
 
@@ -18,7 +14,7 @@ library(geniusR)
 This package must be installed from GitHub.
 
 ```{r, eval = F}
-#devtools::install_github("josiahparry/geniusR")
+devtools::install_github("josiahparry/geniusR")
 ```
 
 ## Using geniusR
@@ -26,6 +22,7 @@ This package must be installed from GitHub.
 The main function you will be using to acquire song lyrics is `genius_lyrics()`. Supply an artist and a song title as character strings.
 
 ```{r}
+library(geniusR)
 genius_lyrics(artist = "Margaret Glaspy", song = "Memory Street")
 ```
 
