@@ -13,6 +13,7 @@
 #' @import dplyr
 
 genius_lyrics <- function(artist = NULL, song = NULL) {
+  song <- str_replace_all(song, "\\s*\\([^\\)]+\\)", "")
   song_url <- gen_song_url(artist, song)
   lyrics <- genius_url(song_url) %>%
     mutate(line = row_number())
