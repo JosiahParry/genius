@@ -1,0 +1,80 @@
+---
+title: "geniusR Basics"
+author: "Josiah Parry"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# geniusR
+
+geniusR enables qucik and easy download of song lyrics. The intent behind the package is to be able to perform text based analyses on songs in a tidy[text] format. 
+
+This package was inspired by the release of Kendrick Lamar's most recent album, **DAMN.**. As most programmers do, I spent way too long to simplify a task, that being accessing song lyrics. Genius (formerly Rap Genius) is the most widly accessible platform for lyrics. 
+
+The functions in this package enable easy access of individual song lyrics, album tracklists, and lyrics to whole albums. 
+
+## Individual songs `genius_lyrics()`
+
+Getting lyrics to a single song is pretty easy. Let's get in our **ELEMENT.** and checkout **DNA.**. But first, note that the `genius_lyrics()` function takes two arguments, `artist` and `song`. Be sure to spell the name of the artist and the song correctly, but don't worry about capitalization. 
+
+First, let's set up our libraries / working environment. 
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# Load needed libraries
+library(geniusR)
+library(tidyverse)
+library(tidytext)
+```
+
+`genius_lyrics()` returns only the barebones. Utilizing `dplyr` we can also create a new variable with the line number to help in future [tidytext](https://github.com/juliasilge/tidytext) analysis. This will be covered in a later vignette / post.  
+
+```{r}
+DNA <- genius_lyrics(artist = "Kendrick Lamar", song = "DNA.")
+DNA %>% 
+  mutate(line = row_number())
+
+```
+
+## Album Level Information
+
+### Tracklists
+
+There are two key functions to be utilized at the album level: `genius_tracklist()` and `genius_album()`.
+
+I often only know an album name and none of the track titles. Often I only know the position in the tracklist. For this reason, I created a tool to provide an album tracklist. This function, `genius_tracklist()` takes the arguments `artist` and `album`. Simple enough, right? 
+
+Let's get the tracklist for the original release of **DAMN.**. However, real Kendrick fans know that the album was intended to be listened to in chronological *and* reverse order—as is on the collector's release. 
+
+
+```{r}
+damn_tracks <- genius_tracklist(artist = "Kendrick Lamar", album = "DAMN.")
+
+# Collector's reverse order
+damn_tracks %>% 
+  arrange(-track_n)
+```
+
+### Album Lyrics
+
+If lyrics for a full album are what you desire, look no further than `genius_album()`. With a little help from [`purrr`](https://github.com/tidyverse/purrr) you can avoid the annoying iterations! `genius_album()` is designed for simple use. Provide it with only two argument—`artist` and `album`—and you'll have lyrics in no time! 
+
+`genius_album()` returns a tibble with a column of nested data frames where each song's lyrics are contained. Nesting the lyrics was done to have a less cluttered data frame. You can unnest the lyrics by setting `nested = FALSE`. Alternatively, you can pipe it into an `unnest()` call. 
+
+
+```{r}
+DAMN <- genius_album(artist = "Kendrick Lamar", album = "DAMN.", nested = FALSE)
+
+# Alternative method
+#genius_album(artist = "Kendrick Lamar", album = "DAMN.") %>% 
+#  unnest(lyrics)
+
+head(DAMN)
+```
+
+Bam. Easy peasy. Now you have a sweet data frame ready for a tidy text analysis!
+
+
