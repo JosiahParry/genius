@@ -20,12 +20,8 @@ genius_album <- function(artist = NULL, album = NULL, nested = TRUE) {
   # Obtain tracklist from genius_tracklist
   album <- genius_tracklist(artist, album) %>%
     # Create a new variable with what to search
-    mutate(search_title = str_replace_all(title, "\\s*\\([^\\)]+\\)", ""),
-           # Iterate over search titles and created a nested df column with lyrics
-           lyrics = map(search_title, genius_lyrics, artist = artist))
-
-  # Remove search_title
-  album <- album %>% select(-search_title)
+    mutate(# Iterate over search titles and created a nested df column with lyrics
+           lyrics = map(title, genius_lyrics, artist = artist))
 
   # If nested is wanted return nested DF, otherwise, dont.
   if (nested == TRUE) {
