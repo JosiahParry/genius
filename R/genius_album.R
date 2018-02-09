@@ -15,6 +15,7 @@
 #' @import dplyr
 #' @importFrom purrr map
 #' @importFrom stringr str_replace_all
+#' @importFrom tidyr unnest
 
 genius_album <- function(artist = NULL, album = NULL) {
 
