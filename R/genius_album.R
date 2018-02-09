@@ -16,17 +16,18 @@
 #' @importFrom purrr map
 #' @importFrom stringr str_replace_all
 
-genius_album <- function(artist = NULL, album = NULL, nested = TRUE) {
+genius_album <- function(artist = NULL, album = NULL) {
+
   # Obtain tracklist from genius_tracklist
   album <- genius_tracklist(artist, album) %>%
-    # Create a new variable with what to search
-    mutate(# Iterate over search titles and created a nested df column with lyrics
-           lyrics = map(title, genius_lyrics, artist = artist))
 
-  # If nested is wanted return nested DF, otherwise, dont.
-  if (nested == TRUE) {
-    return(album)
-  } else {
-    return(album %>% unnest(lyrics))
-  }
+    # Iterate over the url to the song title
+    mutate(lyrics = map(track_url, genius_url)) %>%
+
+    # Unnest the tibble with lyrics
+    unnest(lyrics) %>%
+
+    # Select the desired columns
+    select(artist, title = title1, track_n, text)
+
 }
