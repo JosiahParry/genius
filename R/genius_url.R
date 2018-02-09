@@ -24,8 +24,23 @@ genius_url <- function(url) {
                  html_node(session, ".lyrics")) %>%
     read_lines() %>%
     na.omit()
+
+  # Artist
+  artist <- html_nodes(session, ".header_with_cover_art-primary_info-primary_artist") %>%
+    html_text() %>%
+    str_replace_all("\n", "") %>%
+    str_trim()
+
+  # Song title
+  song_title <- html_nodes(session, ".header_with_cover_art-primary_info-title") %>%
+    html_text() %>%
+    str_replace_all("\n", "") %>%
+    str_trim()
+
   # Convert to tibble
-  lyrics <- tibble(text = lyrics)
+  lyrics <- tibble(artist = artist,
+                   title = song_title,
+                   text = lyrics)
   # Isolate only lines that contain content
   index <- which(str_detect(lyrics$text, "[[:alnum:]]") == TRUE)
   lyrics <- lyrics[index,]
