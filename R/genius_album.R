@@ -31,4 +31,5 @@ genius_album <- function(artist = NULL, album = NULL) {
     # Select the desired columns
     select(artist, title = title1, track_n, text)
 
+  return(album)
 }
