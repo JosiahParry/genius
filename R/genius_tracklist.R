@@ -11,7 +11,7 @@
 #'
 #' @export
 #' @import dplyr
-#' @importFrom rvest html_session html_nodes html_text
+#' @importFrom rvest html_session html_nodes html_text html_attr
 #' @importFrom stringr str_replace_all str_trim
 
 genius_tracklist <- function(artist = NULL, album = NULL) {

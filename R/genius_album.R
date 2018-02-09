@@ -4,12 +4,12 @@
 #'
 #' @param artist The quoted name of the artist. Spelling matters, capitalization does not.
 #' @param album The quoted name of the album Spelling matters, capitalization does not.
-#' @param nested If true (default), provides lyrics as a nested data frame column. If false, unnests the lyrics.
+#'
 #'
 #' @examples
 #'
-#' genius_album(artist = "Petal", album = "Comfort EP", nested = TRUE)
-#' genius_album(artist = "Fit For A King", album = "Deathgrip", nested = FALSE)
+#' genius_album(artist = "Petal", album = "Comfort EP")
+#' genius_album(artist = "Fit For A King", album = "Deathgrip")
 #'
 #' @export
 #' @import dplyr
