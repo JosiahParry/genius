@@ -4,21 +4,19 @@
 \alias{genius_album}
 \title{Retrieve song lyrics for an album}
 \usage{
-genius_album(artist = NULL, album = NULL, nested = TRUE)
+genius_album(artist = NULL, album = NULL)
 }
 \arguments{
 \item{artist}{The quoted name of the artist. Spelling matters, capitalization does not.}
 
 \item{album}{The quoted name of the album Spelling matters, capitalization does not.}
-
-\item{nested}{If true (default), provides lyrics as a nested data frame column. If false, unnests the lyrics.}
 }
 \description{
 Obtain the lyrics to an album in a tidy format.
 }
 \examples{
 
-genius_album(artist = "Petal", album = "Comfort EP", nested = TRUE)
-genius_album(artist = "Fit For A King", album = "Deathgrip", nested = FALSE)
+genius_album(artist = "Petal", album = "Comfort EP")
+genius_album(artist = "Fit For A King", album = "Deathgrip")
 
 }
