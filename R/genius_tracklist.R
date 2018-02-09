@@ -33,11 +33,18 @@ genius_tracklist <- function(artist = NULL, album = NULL) {
     str_replace_all("Lyrics", "") %>%
     str_trim()
 
+  # Get all song urls
+  track_url <- html_nodes(session, ".u-display_block") %>%
+    html_attr('href') %>%
+    str_replace_all("\n", "") %>%
+    str_trim()
+
   # Create df for easy filtering
   # Filter to find only the actual tracks, the ones without a track number were credits / booklet etc
   df <- tibble(
     title = track_titles,
-    track_n = as.integer(track_numbers)
+    track_n = as.integer(track_numbers),
+    track_url = track_url
   ) %>%
     filter(track_n > 0)
 
