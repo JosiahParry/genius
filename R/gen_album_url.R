@@ -15,10 +15,12 @@
 
 gen_album_url <- function(artist = NULL, album = NULL) {
   artist <- str_replace_all(artist, "[[:punct:]]", "")
-  album <- str_replace_all(album, "[[:punct:]]", "")
+  album <-  str_replace_all(album, "\\.", " ") %>%
+    str_replace_all("[[:punct:]]", "")
   base_url <- "https://genius.com/albums/"
   query <- paste(artist,"/", album, sep = "") %>%
     str_replace_all(" ", "-")
+
   url <- paste0(base_url, query)
   return(url)
 }
