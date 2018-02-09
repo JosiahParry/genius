@@ -17,8 +17,10 @@
 
 genius_url <- function(url) {
 
+  # Start a new session
   session <- html_session(url)
 
+  # Clean the song lyrics
   lyrics <- gsub(pattern = "<.*?>",
                  replacement = "\n",
                  html_node(session, ".lyrics")) %>%
@@ -41,9 +43,11 @@ genius_url <- function(url) {
   lyrics <- tibble(artist = artist,
                    title = song_title,
                    text = lyrics)
+
   # Isolate only lines that contain content
   index <- which(str_detect(lyrics$text, "[[:alnum:]]") == TRUE)
   lyrics <- lyrics[index,]
+
   # Remove lines with things such as [Intro: person & so and so]
   return(lyrics[str_detect(lyrics$text, "\\[|\\]") == FALSE, ])
 
