@@ -25,7 +25,8 @@ genius_url <- function(url) {
                  replacement = "\n",
                  html_node(session, ".lyrics")) %>%
     read_lines() %>%
-    na.omit()
+    na.omit() %>%
+    str_replace_all("’", "'")
 
   # Artist
   artist <- html_nodes(session, ".header_with_cover_art-primary_info-primary_artist") %>%
