@@ -4,7 +4,7 @@
 #'
 #' @param artist The quoted name of the artist. Spelling matters, capitalization does not.
 #' @param album The quoted name of the album Spelling matters, capitalization does not.
-#'
+#' @param info Return extra information about each song. Default `"simple"` returns `title`, `track_n`, and `text`. Set `info = "artist"` for artist and track title. See args to `genius_lyrics()`.
 #'
 #' @examples
 #'
@@ -17,19 +17,18 @@
 #' @importFrom stringr str_replace_all
 #' @importFrom tidyr unnest
 
-genius_album <- function(artist = NULL, album = NULL) {
+genius_album <- function(artist = NULL, album = NULL, info = "simple") {
 
   # Obtain tracklist from genius_tracklist
   album <- genius_tracklist(artist, album) %>%
 
     # Iterate over the url to the song title
-    mutate(lyrics = map(track_url, genius_url)) %>%
+    mutate(lyrics = map(track_url, genius_url, info)) %>%
 
     # Unnest the tibble with lyrics
     unnest(lyrics) %>%
+    select(-track_url)
 
-    # Select the desired columns
-    select(artist, title = title1, track_n, text)
 
   return(album)
 }

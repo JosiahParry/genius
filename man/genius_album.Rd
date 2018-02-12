@@ -4,12 +4,14 @@
 \alias{genius_album}
 \title{Retrieve song lyrics for an album}
 \usage{
-genius_album(artist = NULL, album = NULL)
+genius_album(artist = NULL, album = NULL, info = "simple")
 }
 \arguments{
 \item{artist}{The quoted name of the artist. Spelling matters, capitalization does not.}
 
 \item{album}{The quoted name of the album Spelling matters, capitalization does not.}
+
+\item{info}{Return extra information about each song. Default `"simple"` returns `title`, `track_n`, and `text`. Set `info = "artist"` for artist and track title. See args to `genius_lyrics()`.}
 }
 \description{
 Obtain the lyrics to an album in a tidy format.

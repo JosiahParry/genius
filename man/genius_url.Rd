@@ -4,10 +4,12 @@
 \alias{genius_url}
 \title{Use Genius url to retrieve lyrics}
 \usage{
-genius_url(url)
+genius_url(url, info = "title")
 }
 \arguments{
 \item{url}{The url of song lyrics on Genius}
+
+\item{info}{Default `"title"`, returns the track title. Set to `"simple"` for only lyrics, `"artist"` for the lyrics and artist, or `"all"` to return the lyrics, artist, and title.}
 }
 \description{
 This function is used inside of the `genius_lyrics()` function. Given a url to a song on Genius, this function returns a tibble where each row is one line. Pair this function with `gen_song_url()` for easier access to song lyrics.
@@ -16,6 +18,6 @@ This function is used inside of the `genius_lyrics()` function. Given a url to a
 url <- gen_song_url(artist = "Kendrick Lamar", song = "HUMBLE")
 genius_url(url)
 
-genius_url("https://genius.com/Head-north-in-the-water-lyrics")
+genius_url("https://genius.com/Head-north-in-the-water-lyrics", info = "all")
 
 }

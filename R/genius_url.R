@@ -1,13 +1,15 @@
 #' Use Genius url to retrieve lyrics
 #'
 #' This function is used inside of the `genius_lyrics()` function. Given a url to a song on Genius, this function returns a tibble where each row is one line. Pair this function with `gen_song_url()` for easier access to song lyrics.
+#'
 #' @param url The url of song lyrics on Genius
+#' @param info Default `"title"`, returns the track title. Set to `"simple"` for only lyrics, `"artist"` for the lyrics and artist, or `"all"` to return the lyrics, artist, and title.
 #'
 #' @examples
 #' url <- gen_song_url(artist = "Kendrick Lamar", song = "HUMBLE")
 #' genius_url(url)
 #'
-#' genius_url("https://genius.com/Head-north-in-the-water-lyrics")
+#' genius_url("https://genius.com/Head-north-in-the-water-lyrics", info = "all")
 #'
 #' @export
 #' @import dplyr
@@ -15,7 +17,7 @@
 #' @importFrom stringr str_detect
 #' @importFrom readr read_lines
 
-genius_url <- function(url) {
+genius_url <- function(url, info = "title") {
 
   # Start a new session
   session <- html_session(url)
@@ -50,6 +52,12 @@ genius_url <- function(url) {
   lyrics <- lyrics[index,]
 
   # Remove lines with things such as [Intro: person & so and so]
-  return(lyrics[str_detect(lyrics$text, "\\[|\\]") == FALSE, ])
+  lyrics <- lyrics[str_detect(lyrics$text, "\\[|\\]") == FALSE, ]
 
+  switch(info,
+         simple = {return(select(lyrics, -artist, -title))},
+         artist = {return(select(lyrics, -title))},
+         title = {return(select(lyrics, -artist))},
+         all = return(lyrics)
+  )
 }
