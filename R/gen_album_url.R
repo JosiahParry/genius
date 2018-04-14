@@ -14,10 +14,8 @@
 #' @importFrom stringr str_replace_all
 
 gen_album_url <- function(artist = NULL, album = NULL) {
-  artist <- str_replace_all(artist, "[[:punct:]]", "")
-  album <-  str_replace_all(album, "\\.", " ") %>%
-    str_replace_all("[[:punct:]]", "") %>%
-    str_trim() # Trim leading / following white space
+  artist <- prep_info(artist)
+  album <-  prep_info(album)
   base_url <- "https://genius.com/albums/"
   query <- paste(artist,"/", album, sep = "") %>%
     str_replace_all(" ", "-")

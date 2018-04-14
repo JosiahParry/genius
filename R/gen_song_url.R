@@ -12,14 +12,10 @@
 #' @export
 #' @importFrom stringr str_replace_all
 #' @import dplyr
+#'
 gen_song_url <- function(artist = NULL, song = NULL) {
-  artist <- str_replace_all(artist, "[[:punct:]]", "")
-  song <- str_replace_all(song, "\\s*\\(Ft.[^\\)]+\\)", "") %>%
-    str_replace_all("&", "and") %>%
-    str_replace_all("-", " ") %>%
-    str_replace_all("[[:blank:]]+", " ") %>%
-    str_trim() %>%
-    str_replace_all("[[:punct:]]", "")
+  artist <- prep_info(artist)
+  song <- prep_info(song)
   base_url <- "https://genius.com/"
   query <- paste(artist, song, "lyrics", sep = "-") %>%
     str_replace_all(" ", "-")
