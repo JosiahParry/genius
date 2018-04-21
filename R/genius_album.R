@@ -20,14 +20,18 @@
 genius_album <- function(artist = NULL, album = NULL, info = "simple") {
 
   # Obtain tracklist from genius_tracklist
-  album <- genius_tracklist(artist, album) %>%
+  tracks <-  genius_tracklist(artist, album)
+
+  album <- tracks %>%
 
     # Iterate over the url to the song title
     mutate(lyrics = map(track_url, genius_url, info)) %>%
 
     # Unnest the tibble with lyrics
     unnest(lyrics) %>%
+    right_join(tracks) %>%
     select(-track_url)
+
 
 
   return(album)
