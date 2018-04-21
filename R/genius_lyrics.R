@@ -16,7 +16,6 @@
 
 genius_lyrics <- function(artist = NULL, song = NULL, info = "title") {
   song_url <- gen_song_url(artist, song)
-  lyrics <- genius_url(song_url, info) %>%
-    mutate(line = row_number())
+  lyrics <- genius_url(song_url, info)
   return(lyrics)
 }

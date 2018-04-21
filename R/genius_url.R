@@ -44,19 +44,20 @@ genius_url <- function(url, info = "title") {
 
   # Convert to tibble
   lyrics <- tibble(artist = artist,
-                   title = song_title,
-                   text = lyrics)
+                   track_title = song_title,
+                   lyric = lyrics)
 
   # Isolate only lines that contain content
-  index <- which(str_detect(lyrics$text, "[[:alnum:]]") == TRUE)
+  index <- which(str_detect(lyrics$lyric, "[[:alnum:]]") == TRUE)
   lyrics <- lyrics[index,]
 
   # Remove lines with things such as [Intro: person & so and so]
-  lyrics <- lyrics[str_detect(lyrics$text, "\\[|\\]") == FALSE, ]
+  lyrics <- lyrics[str_detect(lyrics$lyric, "\\[|\\]") == FALSE, ]
+  lyrics <- lyrics %>% mutate(line = row_number())
 
   switch(info,
-         simple = {return(select(lyrics, -artist, -title))},
-         artist = {return(select(lyrics, -title))},
+         simple = {return(select(lyrics, -artist, -track_title))},
+         artist = {return(select(lyrics, -track_title))},
          title = {return(select(lyrics, -artist))},
          all = return(lyrics)
   )
