@@ -42,7 +42,7 @@ genius_tracklist <- function(artist = NULL, album = NULL) {
   # Create df for easy filtering
   # Filter to find only the actual tracks, the ones without a track number were credits / booklet etc
   df <- tibble(
-    title = track_titles,
+    track_title = track_titles,
     track_n = as.integer(track_numbers),
     track_url = track_url
   ) %>%
