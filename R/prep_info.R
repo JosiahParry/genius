@@ -18,6 +18,12 @@ prep_info <- function(input) {
                 c("\\s*\\(Ft.[^\\)]+\\)" = "",
                   "&" = "and",
                   "-" = " ",
+                  " \\+" = "", #new
+                  "\\$" = " ", #new
+                  " /" = "", #new
+                  "/" = " ", #new
+                  "é" = "e", #new
+                  "ö" = "o", #new
                   "[[:blank:]]+" = " ")) %>%
                   str_trim() %>%
                   str_replace_all("[[:punct:]]", "")
