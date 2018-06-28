@@ -30,7 +30,6 @@
 #' artist_songs %>%
 #'  add_genius(artist, track, type = "lyrics")
 
-#' genius_url("https://genius.com/Head-north-in-the-water-lyrics", info = "all")
 #'
 #' @export
 #' @import dplyr
