@@ -1,3 +1,8 @@
+#' Utility functions
+#'
+#' @import dplyr
+#' @importFrom stringr str_replace_all str_trim
+
 possible_album <- possibly(genius_album, otherwise = as_tibble())
 possible_lyrics <- possibly(genius_lyrics, otherwise = as_tibble())
 
