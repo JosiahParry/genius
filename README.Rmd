@@ -2,6 +2,7 @@
 title: "Quickstart: geniusR"
 author: "Josiah Parry"
 date: "2/12/2018"
+output: github_document
 ---
 
 # Overview
@@ -11,14 +12,14 @@ This package was created to provide an easy method to access lyrics as text data
 ## Installation  
 This package must be installed from GitHub.
 
-```{r, eval = F}
+```{r, eval = FALSE}
 devtools::install_github("josiahparry/geniusR")
 ```
 
 Load the package:
 ```{r}
 library(geniusR)
-library(tidyverse) # For manipulation
+suppressPackageStartupMessages(library(tidyverse)) # For manipulation
 ```
 
 
@@ -134,7 +135,7 @@ process <- genius_tracklist("Sampha", "Process")
 
 # Filter down to find the individual song
 piano_info <- process %>% 
-  filter(title == "(No One Knows Me) Like the Piano")
+  filter(track_title == "(No One Knows Me) Like the Piano")
 
 # Filter song using string detection
 # process %>% 
@@ -188,7 +189,6 @@ genius_album <- function(artist = NULL, album = NULL, info = "simple") {
     
     # Deselect the track url
     select(-track_url)
-
 
   return(album)
 }
