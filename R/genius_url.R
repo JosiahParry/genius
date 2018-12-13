@@ -14,51 +14,71 @@
 #' @export
 #' @import dplyr
 #' @importFrom rvest html_session html_node
-#' @importFrom stringr str_detect
+#' @importFrom tidyr spread fill separate replace_na
+#' @importFrom stringr str_detect str_extract
 #' @importFrom readr read_lines
 
 genius_url <- function(url, info = "title") {
-
-  # Start a new session
-  session <- html_session(url)
-
-  # Clean the song lyrics
-  lyrics <- gsub(pattern = "<.*?>",
-                 replacement = "\n",
-                 html_node(session, ".lyrics")) %>%
+ session <- html_session(url)
+ # Clean the song lyrics
+ lyrics <- gsub(pattern = "<.*?>",
+                replacement = "\n",
+                html_node(session, ".lyrics")) %>%
     read_lines() %>%
     na.omit() %>%
     str_replace_all("’", "'")
-
-  # Artist
-  artist <- html_nodes(session, ".header_with_cover_art-primary_info-primary_artist") %>%
+    
+# Artist
+artist <- html_nodes(session, ".header_with_cover_art-primary_info-primary_artist") %>%
     html_text() %>%
     str_replace_all("\n", "") %>%
     str_trim()
-
-  # Song title
-  song_title <- html_nodes(session, ".header_with_cover_art-primary_info-title") %>%
+    
+# Song title
+song_title <- html_nodes(session, ".header_with_cover_art-primary_info-title") %>%
     html_text() %>%
     str_replace_all("\n", "") %>%
     str_trim()
-
-  # Convert to tibble
-  lyrics <- tibble(artist = artist,
-                   track_title = song_title,
-                   lyric = lyrics)
-
-  # Isolate only lines that contain content
-  index <- which(str_detect(lyrics$lyric, "[[:alnum:]]") == TRUE)
-  lyrics <- lyrics[index,]
-
-  # Remove lines with things such as [Intro: person & so and so]
-  lyrics <- lyrics[str_detect(lyrics$lyric, "\\[|\\]") == FALSE, ]
-  lyrics <- lyrics %>% mutate(line = row_number())
-
-  switch(info,
-         simple = {return(select(lyrics, -artist, -track_title))},
-         artist = {return(select(lyrics, -track_title))},
-         title = {return(select(lyrics, -artist))},
-         all = return(lyrics)
-  )
+    
+# Convert to tibble
+lyrics <- tibble(artist = artist,
+            track_title = song_title,
+            lyric = lyrics)
+    
+    
+# Isolate only lines that contain content
+index <- which(str_detect(lyrics$lyric, "[[:alnum:]]") == TRUE)
+lyrics <- lyrics[index,]
+lyrics <- lyrics %>% mutate(line = row_number()) # to help spread()
+    
+# separate lines by bracket information ([intro], [verse 1], etc)
+lyrics <- lyrics %>%
+    mutate(type =
+            case_when(
+                str_detect(lyrics$lyric, "\\[|\\]") ~ "meta",
+                TRUE ~ "lyric")) %>%
+    spread(key = type, value = lyric) %>%
+    fill(meta) %>%
+    
+    #remove producer info
+    filter(!is.na(lyric), !str_detect(lyric, "[Pp]roducer")) %>%
+    
+    #remove brackets
+    mutate(meta = str_extract(meta, "[^\\[].*[^\\]]")) %>%
+    
+    #make "verse" and "vocalist" columns
+    separate(meta, into = c("verse", "vocalist"), sep = ": ", fill = "right") %>%
+    
+    #if song has no features
+    mutate(vocalist = replace_na(vocalist, artist[1]))
+    
+# Remove lines with things such as [Intro: person & so and so]
+lyrics <- lyrics %>% mutate(line = row_number())
+switch(info,
+     simple = {return(select(lyrics, -artist, -track_title, -verse, -vocalist))},
+     artist = {return(select(lyrics, -track_title, -verse, -vocalist))},
+     title = {return(select(lyrics, -artist, -verse, -vocalist))},
+     features = {return(lyrics)},
+     all = return(select(lyrics, -verse, -vocalist))
+    )
 }
