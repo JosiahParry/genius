@@ -1,14 +1,12 @@
 Quickstart: geniusR
 ================
 Josiah Parry
-2/12/2018
+12/21/2018
 
-# Overview
+This package was created to provide an easy method to access lyrics as text data using [Genius](genius.com).
 
-This package was created to provide an easy method to access lyrics as
-text data using the website [Genius](genius.com).
-
-## Installation
+Installation
+------------
 
 This package must be installed from GitHub.
 
@@ -20,47 +18,29 @@ Load the package:
 
 ``` r
 library(geniusR)
+library(tidyverse)
 ```
 
-    ## Loading required package: dplyr
+Getting Lyrics
+==============
 
-    ## 
-    ## Attaching package: 'dplyr'
+Whole Albums
+------------
 
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
-suppressPackageStartupMessages(library(tidyverse)) # For manipulation
-```
-
-# Getting Lyrics
-
-## Whole Albums
-
-`genius_album()` allows you to download the lyrics for an entire album
-in a `tidy` format. There are two arguments `artists` and `album`.
-Supply the quoted name of artist and the album (if it gives you issues
-check that you have the album name and artists as specified on
-[Genius](https://genius.com)).
+`genius_album()` allows you to download the lyrics for an entire album in a `tidy` format. There are two arguments `artists` and `album`. Supply the quoted name of artist and the album (if it gives you issues check that you have the album name and artists as specified on [Genius](https://genius.com)).
 
 This returns a tidy data frame with three columns:
 
-  - `title`: track name
-  - `track_n`: track number
-  - `text`:
-lyrics
-
-<!-- end list -->
+-   `title`: track name
+-   `track_n`: track number
+-   `text`: lyrics
 
 ``` r
 emotions_math <- genius_album(artist = "Margaret Glaspy", album = "Emotions and Math")
 ```
+
+    ## Warning: The `printer` argument is soft-deprecated as of rlang 0.3.0.
+    ## This warning is displayed once per session.
 
     ## Joining, by = c("track_title", "track_n", "track_url")
 
@@ -69,121 +49,82 @@ emotions_math
 ```
 
     ## # A tibble: 372 x 4
-    ##    track_title       track_n lyric                                   line
-    ##    <chr>               <int> <chr>                                  <int>
-    ##  1 Emotions And Math       1 Oh when I got you by my side               1
-    ##  2 Emotions And Math       1 Everything's alright                       2
-    ##  3 Emotions And Math       1 Its just when your gone                    3
-    ##  4 Emotions And Math       1 I start to snooze the alarm                4
-    ##  5 Emotions And Math       1 Cause I stay up until 4 in the morning     5
-    ##  6 Emotions And Math       1 Counting all the days 'til you're back     6
-    ##  7 Emotions And Math       1 Shivering in an ice cold bath              7
-    ##  8 Emotions And Math       1 Of emotions and math                       8
-    ##  9 Emotions And Math       1 Oh it's a shame                            9
-    ## 10 Emotions And Math       1 And I'm to blame                          10
+    ##    track_title       track_n  line lyric                                 
+    ##    <chr>               <int> <int> <chr>                                 
+    ##  1 Emotions And Math       1     1 Oh when I got you by my side          
+    ##  2 Emotions And Math       1     2 Everything's alright                  
+    ##  3 Emotions And Math       1     3 Its just when your gone               
+    ##  4 Emotions And Math       1     4 I start to snooze the alarm           
+    ##  5 Emotions And Math       1     5 Cause I stay up until 4 in the morning
+    ##  6 Emotions And Math       1     6 Counting all the days 'til you're back
+    ##  7 Emotions And Math       1     7 Shivering in an ice cold bath         
+    ##  8 Emotions And Math       1     8 Of emotions and math                  
+    ##  9 Emotions And Math       1     9 Oh it's a shame                       
+    ## 10 Emotions And Math       1    10 And I'm to blame                      
     ## # ... with 362 more rows
 
-## Multiple Albums
+Multiple Albums / Songs
+-----------------------
 
-If you wish to download multiple albums from multiple artists, try and
-keep it tidy and avoid binding rows if you can. We can achieve this in a
-tidy workflow by creating a tibble with two columns: `artist` and
-`album` where each row is an artist and their album. We can then iterate
-over those columns with `purrr:map2()`.
+If you wish to download multiple albums from multiple artists, try and keep it tidy and avoid binding rows if you can. We can achieve this in a tidy workflow by creating a tibble with two columns: `artist` and `album` where each row is an artist and their album. We can then iterate over those columns with `add_genius()`.
 
-In this example I will extract 3 albums from Kendrick Lamar and Sara
-Bareilles (two of my favotire musicians). The first step is to create
-the tibble with artists and album titles.
+Pipe a dataframe with a column for the album artists and album/track information. The argument `type` is used to indicate if the dataframe contains songs or albums
 
 ``` r
-albums <-  tibble(
-  artist = c(
-    rep("Kendrick Lamar", 3), 
-    rep("Sara Bareilles", 3)
-    ),
-  album = c(
-    "Section 80", "Good Kid, M.A.A.D City", "DAMN.",
-    "The Blessed Unrest", "Kaleidoscope Heart", "Little Voice"
-    )
+# Example with 2 different artists and albums
+artist_albums <- tribble(
+ ~artist, ~album,
+ "J. Cole", "KOD",
+ "Sampha", "Process"
 )
 
-albums
+
+artist_albums %>%
+ add_genius(artist, album)
 ```
 
-    ## # A tibble: 6 x 2
-    ##   artist         album                 
-    ##   <chr>          <chr>                 
-    ## 1 Kendrick Lamar Section 80            
-    ## 2 Kendrick Lamar Good Kid, M.A.A.D City
-    ## 3 Kendrick Lamar DAMN.                 
-    ## 4 Sara Bareilles The Blessed Unrest    
-    ## 5 Sara Bareilles Kaleidoscope Heart    
-    ## 6 Sara Bareilles Little Voice
+    ## Joining, by = c("artist", "album")
 
-No we can iterate over each row using the `map2` function. This allows
-us to feed each value from the `artist` and `album` columns to the
-`genius_album()` function. Utilizing a `map` call within a
-`dplyr::mutate()` function creates a list column where each value is a
-`tibble` with the data frame from `genius_album()`. We will later unnest
-this.
+    ## # A tibble: 0 x 2
+    ## # ... with 2 variables: artist <chr>, album <chr>
+
+This can be easily replicated with multiple songs as well.
 
 ``` r
-## We will have an additional artist column that will have to be dropped
-album_lyrics <- albums %>% 
-  mutate(tracks = map2(artist, album, genius_album))
+# Example with 2 different artists and songs
+artist_songs <- tribble(
+ ~artist, ~track,
+ "J. Cole", "Motiv8",
+ "Andrew Bird", "Anonanimal"
+)
+
+artist_songs %>%
+ add_genius(artist, track, type = "lyrics")
 ```
 
-    ## Joining, by = c("track_title", "track_n", "track_url")
-    ## Joining, by = c("track_title", "track_n", "track_url")
-    ## Joining, by = c("track_title", "track_n", "track_url")
-    ## Joining, by = c("track_title", "track_n", "track_url")
-    ## Joining, by = c("track_title", "track_n", "track_url")
-    ## Joining, by = c("track_title", "track_n", "track_url")
+    ## Joining, by = c("artist", "track")
 
-``` r
-album_lyrics
-```
+    ## # A tibble: 71 x 5
+    ##    artist  track  track_title  line lyric                                  
+    ##    <chr>   <chr>  <chr>       <int> <chr>                                  
+    ##  1 J. Cole Motiv8 Motiv8          1 You really wanna know who Superman is? 
+    ##  2 J. Cole Motiv8 Motiv8          2 Watch this, pow!                       
+    ##  3 J. Cole Motiv8 Motiv8          3 I like him                             
+    ##  4 J. Cole Motiv8 Motiv8          4 I think he's pretty cool               
+    ##  5 J. Cole Motiv8 Motiv8          5 He's my idol                           
+    ##  6 J. Cole Motiv8 Motiv8          6 I can't have no sympathy for fuck nigg…
+    ##  7 J. Cole Motiv8 Motiv8          7 All this shit I've seen done made my b…
+    ##  8 J. Cole Motiv8 Motiv8          8 Spill promethazine inside a double cup 
+    ##  9 J. Cole Motiv8 Motiv8          9 Double up my cream, now that's a Doubl…
+    ## 10 J. Cole Motiv8 Motiv8         10 Please don't hit my phone if it ain't …
+    ## # ... with 61 more rows
 
-    ## # A tibble: 6 x 3
-    ##   artist         album                  tracks              
-    ##   <chr>          <chr>                  <list>              
-    ## 1 Kendrick Lamar Section 80             <tibble [1,131 × 4]>
-    ## 2 Kendrick Lamar Good Kid, M.A.A.D City <tibble [2,285 × 4]>
-    ## 3 Kendrick Lamar DAMN.                  <tibble [1,116 × 4]>
-    ## 4 Sara Bareilles The Blessed Unrest     <tibble [698 × 4]>  
-    ## 5 Sara Bareilles Kaleidoscope Heart     <tibble [565 × 4]>  
-    ## 6 Sara Bareilles Little Voice           <tibble [586 × 4]>
-
-Now when you view this you will see that each value within the `tracks`
-column is `<tibble>`. This means that that value is infact another
-`tibble`. We expand this using `tidyr::unnest()`.
-
-``` r
-# Unnest the lyrics to expand 
-lyrics <- album_lyrics %>% 
-  unnest(tracks) %>%    # Expanding the lyrics 
-  arrange(desc(artist)) # Arranging by artist name 
-
-head(lyrics)
-```
-
-    ## # A tibble: 6 x 6
-    ##   artist     album       track_title track_n lyric                    line
-    ##   <chr>      <chr>       <chr>         <int> <chr>                   <int>
-    ## 1 Sara Bare… The Blesse… Brave             1 You can be amazing          1
-    ## 2 Sara Bare… The Blesse… Brave             1 You can turn a phrase …     2
-    ## 3 Sara Bare… The Blesse… Brave             1 You can be the outcast      3
-    ## 4 Sara Bare… The Blesse… Brave             1 Or be the backlash of …     4
-    ## 5 Sara Bare… The Blesse… Brave             1 Or you can start speak…     5
-    ## 6 Sara Bare… The Blesse… Brave             1 Nothing's gonna hurt y…     6
-
-## Song Lyrics
+Song Lyrics
+-----------
 
 ### `genius_lyrics()`
 
-If you want only a single song, you can use `genius_lyrics()`. Supply an
-artist and a song title as character strings, and
-voila.
+If you want only a single song, you can use `genius_lyrics()`. Supply an artist and a song title as character strings, and voila.
 
 ``` r
 memory_street <- genius_lyrics(artist = "Margaret Glaspy", song = "Memory Street")
@@ -192,35 +133,32 @@ memory_street
 ```
 
     ## # A tibble: 27 x 3
-    ##    track_title   lyric                                    line
-    ##    <chr>         <chr>                                   <int>
-    ##  1 Memory Street Ring the alarm                              1
-    ##  2 Memory Street I'm on memory street                        2
-    ##  3 Memory Street With him on my arm                          3
-    ##  4 Memory Street And my feet on the dash of that car         4
-    ##  5 Memory Street I don't dare                                5
-    ##  6 Memory Street Walk down memory street                     6
-    ##  7 Memory Street Why remember                                7
-    ##  8 Memory Street All the times I took forever to forget?     8
-    ##  9 Memory Street Call the guards                             9
-    ## 10 Memory Street I'm at the gates                           10
+    ##    track_title    line lyric                                  
+    ##    <chr>         <int> <chr>                                  
+    ##  1 Memory Street     1 Ring the alarm                         
+    ##  2 Memory Street     2 I'm on memory street                   
+    ##  3 Memory Street     3 With him on my arm                     
+    ##  4 Memory Street     4 And my feet on the dash of that car    
+    ##  5 Memory Street     5 I don't dare                           
+    ##  6 Memory Street     6 Walk down memory street                
+    ##  7 Memory Street     7 Why remember                           
+    ##  8 Memory Street     8 All the times I took forever to forget?
+    ##  9 Memory Street     9 Call the guards                        
+    ## 10 Memory Street    10 I'm at the gates                       
     ## # ... with 17 more rows
 
-This returns a `tibble` with three columns `title`, `text`, and `line`.
-However, you can specifiy additional arguments to control the amount of
-information to be returned using the `info` argument.
+This returns a `tibble` with three columns `title`, `text`, and `line`. However, you can specifiy additional arguments to control the amount of information to be returned using the `info` argument.
 
-  - `info = "title"` (default): Return the lyrics, line number, and song
-    title.
-  - `info = "simple"`: Return just the lyrics and line number.
-  - `info = "artist"`: Return the lyrics, line number, and artist.
-  - `info = "all"`: Return lyrics, line number, song title, artist.
+-   `info = "title"` (default): Return the lyrics, line number, and song title.
+-   `info = "simple"`: Return just the lyrics and line number.
+-   `info = "artist"`: Return the lyrics, line number, and artist.
+-   `info = "features"`: Returns the lyrics, line number, artist, verse, and vocalist.
+-   `info = "all"`: Return lyrics, line number, song title, artist.
 
-## Tracklists
+Tracklists
+----------
 
-`genius_tracklist()`, given an `artist` and an `album` will return a
-barebones `tibble` with the track title, track number, and the url to
-the lyrics.
+`genius_tracklist()`, given an `artist` and an `album` will return a barebones `tibble` with the track title, track number, and the url to the lyrics.
 
 ``` r
 genius_tracklist(artist = "Basement", album = "Colourmeinkindness") 
@@ -240,27 +178,22 @@ genius_tracklist(artist = "Basement", album = "Colourmeinkindness")
     ##  9 Comfort           9 https://genius.com/Basement-comfort-lyrics  
     ## 10 Wish             10 https://genius.com/Basement-wish-lyrics
 
-## Nitty Gritty
+------------------------------------------------------------------------
 
-`genius_lyrics()` generates a url to Genius which is fed to
-`genius_url()`, the function that does the heavy lifting of actually
-fetching lyrics.
+Nitty Gritty
+------------
 
-I have not figured out all of the patterns that are used for generating
-the Genius.com urls, so errors are bound to happen. If `genius_lyrics()`
-returns an error. Try utilizing `genius_tracklist()` and `genius_url()`
-together to get the song lyrics.
+`genius_lyrics()` generates a url to Genius which is fed to `genius_url()`, the function that does the heavy lifting of actually fetching lyrics.
 
-For example, say “(No One Knows Me) Like the Piano” by *Sampha* wasn’t
-working in a standard `genius_lyrics()` call.
+I have not figured out all of the patterns that are used for generating the Genius.com urls, so errors are bound to happen. If `genius_lyrics()` returns an error. Try utilizing `genius_tracklist()` and `genius_url()` together to get the song lyrics.
+
+For example, say "(No One Knows Me) Like the Piano" by *Sampha* wasn't working in a standard `genius_lyrics()` call.
 
 ``` r
 piano <- genius_lyrics("Sampha", "(No One Knows Me) Like the Piano")
 ```
 
-We could grab the tracklist for the album *Process* which the song is
-from. We could then isolate the url for *(No One Knows Me) Like the
-Piano* and feed that into \`genius\_url().
+We could grab the tracklist for the album *Process* which the song is from. We could then isolate the url for *(No One Knows Me) Like the Piano* and feed that into \`genius\_url().
 
 ``` r
 # Get the tracklist for 
@@ -284,36 +217,33 @@ genius_url(piano_url, info = "simple")
 ```
 
     ## # A tibble: 13 x 2
-    ##    lyric                                                              line
-    ##    <chr>                                                             <int>
-    ##  1 No one knows me like the piano in my mother's home                    1
-    ##  2 You would show me I had something some people call a soul             2
-    ##  3 And you dropped out the sky, oh you arrived when I was three yea…     3
-    ##  4 No one knows me like the piano in my mother's home                    4
-    ##  5 You know I left, I flew the nest                                      5
-    ##  6 And you know I won't be long                                          6
-    ##  7 And in my chest you know me best                                      7
-    ##  8 And you know I'll be back home                                        8
-    ##  9 An angel by her side, all of the times I knew we couldn't cope        9
-    ## 10 They said that it's her time, no tears in sight, I kept the feel…    10
-    ## 11 And you took hold of me and never, never, never let me go            11
-    ## 12 'Cause no one knows me like the piano in my mother's home            12
-    ## 13 In my mother's home                                                  13
+    ##     line lyric                                                             
+    ##    <int> <chr>                                                             
+    ##  1     1 No one knows me like the piano in my mother's home                
+    ##  2     2 You would show me I had something some people call a soul         
+    ##  3     3 And you dropped out the sky, oh you arrived when I was three year…
+    ##  4     4 No one knows me like the piano in my mother's home                
+    ##  5     5 You know I left, I flew the nest                                  
+    ##  6     6 And you know I won't be long                                      
+    ##  7     7 And in my chest you know me best                                  
+    ##  8     8 And you know I'll be back home                                    
+    ##  9     9 An angel by her side, all of the times I knew we couldn't cope    
+    ## 10    10 They said that it's her time, no tears in sight, I kept the feeli…
+    ## 11    11 And you took hold of me and never, never, never let me go         
+    ## 12    12 'Cause no one knows me like the piano in my mother's home         
+    ## 13    13 In my mother's home
 
------
+------------------------------------------------------------------------
 
-# On the Internals
+On the Internals
+================
 
-## Generative functions
+Generative functions
+--------------------
 
-This package works almost entirely on pattern detection. The urls from
-*Genius* are (mostly) easily reproducible (shout out to [Angela
-Li](https://twitter.com/CivicAngela) for pointing this out).
+This package works almost entirely on pattern detection. The urls from *Genius* are (mostly) easily reproducible (shout out to [Angela Li](https://twitter.com/CivicAngela) for pointing this out).
 
-The two functions that generate urls are `gen_song_url()` and
-`gen_album_url()`. To see how the functions work, try feeding an artist
-and song title to `gen_song_url()` and an artist and album title to
-`gen_album_url()`.
+The two functions that generate urls are `gen_song_url()` and `gen_album_url()`. To see how the functions work, try feeding an artist and song title to `gen_song_url()` and an artist and album title to `gen_album_url()`.
 
 ``` r
 gen_song_url("Laura Marling", "Soothing")
@@ -327,41 +257,12 @@ gen_album_url("Daniel Caesar", "Freudian")
 
     ## [1] "https://genius.com/albums/Daniel-Caesar/Freudian"
 
-`genius_lyrics()` calls `gen_song_url()` and feeds the output to
-`genius_url()` which preforms the scraping.
+`genius_lyrics()` calls `gen_song_url()` and feeds the output to `genius_url()` which preforms the scraping.
 
-Getting lyrics for albums is slightly more involved. It first calls
-`genius_tracklist()` which first calls `gen_album_url()` then using the
-handy package `rvest` scrapes the song titles, track numbers, and song
-lyric urls. Next, the song urls from the output are iterated over and
-fed to `genius_url()`.
-
-To make this more clear, take a look inside of `genius_album()`
-
-``` r
-genius_album <- function(artist = NULL, album = NULL, info = "simple") {
-
-  # Obtain tracklist from genius_tracklist
-  album <- genius_tracklist(artist, album) %>%
-
-    # Iterate over the url to the song title
-    mutate(lyrics = map(track_url, genius_url, info)) %>%
-
-    # Unnest the tibble with lyrics
-    unnest(lyrics) %>%
-    
-    # Deselect the track url
-    select(-track_url)
-
-  return(album)
-}
-```
+Getting lyrics for albums is slightly more involved. It first calls `genius_tracklist()` which first calls `gen_album_url()` then using the handy package `rvest` scrapes the song titles, track numbers, and song lyric urls. Next, the song urls from the output are iterated over and fed to `genius_url()`.
 
 ### Notes:
 
-As this is my first *“package”* there will be many issues. Please submit
-an issue and I will do my best to attend to it.
+As this is my first *"package"* there will be many issues. Please submit an issue and I will do my best to attend to it.
 
-There are already issues of which I am present (the lack of error
-handling). If you would like to take those on, please go ahead and make
-a pull request. Please contact me on [Twitter](twitter.com/josiahparry).
+There are already issues of which I am present (the lack of error handling). If you would like to take those on, please go ahead and make a pull request. Please contact me on [Twitter](twitter.com/josiahparry).

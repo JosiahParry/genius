@@ -1,13 +1,12 @@
 ---
 title: "Quickstart: geniusR"
 author: "Josiah Parry"
-date: "2/12/2018"
+date: "12/21/2018"
 output: github_document
 ---
 
-# Overview
 
-This package was created to provide an easy method to access lyrics as text data using the website [Genius](genius.com). 
+This package was created to provide an easy method to access lyrics as text data using [Genius](genius.com). 
   
 ## Installation  
 This package must be installed from GitHub.
@@ -17,9 +16,9 @@ devtools::install_github("josiahparry/geniusR")
 ```
 
 Load the package:
-```{r}
+```{r, message=FALSE}
 library(geniusR)
-suppressPackageStartupMessages(library(tidyverse)) # For manipulation
+library(tidyverse)
 ```
 
 
@@ -42,48 +41,38 @@ emotions_math
 ```
 
 
-## Multiple Albums
+## Multiple Albums / Songs
 
-If you wish to download multiple albums from multiple artists, try and keep it tidy and avoid binding rows if you can. We can achieve this in a tidy workflow by creating a tibble with two columns: `artist` and `album` where each row is an artist and their album. We can then iterate over those columns with `purrr:map2()`.
+If you wish to download multiple albums from multiple artists, try and keep it tidy and avoid binding rows if you can. We can achieve this in a tidy workflow by creating a tibble with two columns: `artist` and `album` where each row is an artist and their album. We can then iterate over those columns with `add_genius()`.
 
-In this example I will extract 3 albums from Kendrick Lamar and Sara Bareilles (two of my favotire musicians). The first step is to create the tibble with artists and album titles. 
+
+Pipe a dataframe with a column for the album artists and album/track information. The argument `type` is used to indicate if the dataframe contains songs or albums
 
 ```{r}
-albums <-  tibble(
-  artist = c(
-    rep("Kendrick Lamar", 3), 
-    rep("Sara Bareilles", 3)
-    ),
-  album = c(
-    "Section 80", "Good Kid, M.A.A.D City", "DAMN.",
-    "The Blessed Unrest", "Kaleidoscope Heart", "Little Voice"
-    )
+# Example with 2 different artists and albums
+artist_albums <- tribble(
+ ~artist, ~album,
+ "J. Cole", "KOD",
+ "Sampha", "Process"
 )
 
-albums
+
+artist_albums %>%
+ add_genius(artist, album)
 ```
 
-No we can iterate over each row using the `map2` function. This allows us to feed each value from the `artist` and `album` columns to the `genius_album()` function. Utilizing a `map` call within a `dplyr::mutate()` function creates a list column where each value is a `tibble` with the data frame from `genius_album()`. We will later unnest this. 
+This can be easily replicated with multiple songs as well. 
 
 ```{r}
-## We will have an additional artist column that will have to be dropped
-album_lyrics <- albums %>% 
-  mutate(tracks = map2(artist, album, genius_album))
+# Example with 2 different artists and songs
+artist_songs <- tribble(
+ ~artist, ~track,
+ "J. Cole", "Motiv8",
+ "Andrew Bird", "Anonanimal"
+)
 
-album_lyrics
-```
-
-
-Now when you view this you will see that each value within the `tracks` column is `<tibble>`. This means that that value is infact another `tibble`. We expand this using `tidyr::unnest()`.
-
-
-```{r}
-# Unnest the lyrics to expand 
-lyrics <- album_lyrics %>% 
-  unnest(tracks) %>%    # Expanding the lyrics 
-  arrange(desc(artist)) # Arranging by artist name 
-
-head(lyrics)
+artist_songs %>%
+ add_genius(artist, track, type = "lyrics")
 ```
 
 
@@ -104,6 +93,7 @@ This returns a `tibble` with three columns `title`, `text`, and `line`. However,
   - `info = "title"` (default): Return the lyrics, line number, and song title.
   - `info = "simple"`: Return just the lyrics and line number.
   - `info = "artist"`: Return the lyrics, line number, and artist.
+  - `info = "features"`: Returns the lyrics, line number, artist, verse, and vocalist.
   - `info = "all"`: Return lyrics, line number, song title, artist.
 
 
@@ -114,6 +104,8 @@ This returns a `tibble` with three columns `title`, `text`, and `line`. However,
 ```{r}
 genius_tracklist(artist = "Basement", album = "Colourmeinkindness") 
 ```
+
+----
 
 ## Nitty Gritty
 
@@ -173,26 +165,6 @@ gen_album_url("Daniel Caesar", "Freudian")
 
 Getting lyrics for albums is slightly more involved. It first calls `genius_tracklist()` which first calls `gen_album_url()` then using the handy package `rvest` scrapes the song titles, track numbers, and song lyric urls. Next, the song urls from the output are iterated over and fed to `genius_url()`.
 
-To make this more clear, take a look inside of `genius_album()`
-
-```{r}
-genius_album <- function(artist = NULL, album = NULL, info = "simple") {
-
-  # Obtain tracklist from genius_tracklist
-  album <- genius_tracklist(artist, album) %>%
-
-    # Iterate over the url to the song title
-    mutate(lyrics = map(track_url, genius_url, info)) %>%
-
-    # Unnest the tibble with lyrics
-    unnest(lyrics) %>%
-    
-    # Deselect the track url
-    select(-track_url)
-
-  return(album)
-}
-```
 
 
 ### Notes:
