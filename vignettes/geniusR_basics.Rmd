@@ -11,9 +11,7 @@ vignette: >
 
 # geniusR
 
-geniusR enables quick and easy download of song lyrics. The intent behind the package is to be able to perform text based analyses on songs in a tidy[text] format. 
-
-This package was inspired by the release of Kendrick Lamar's most recent album, **DAMN.**. As most programmers do, I spent way too long to simplify a task, that being accessing song lyrics. [Genius](https://genius.com) (formerly Rap Genius) is the most widly accessible platform for lyrics. 
+geniusR enables quick and easy download of song lyrics. The intent behind the package is to be able to perform text based analyses on songs in a tidy[text] format. Song lyrics come from [Genius](https://genius.com) (formerly Rap Genius), the most widly accessible platform for lyrics. 
 
 The functions in this package enable easy access of individual song lyrics, album tracklists, and lyrics to whole albums. 
 
@@ -21,31 +19,77 @@ The functions in this package enable easy access of individual song lyrics, albu
 
 Getting lyrics to a single song is pretty easy. Let's get in our **ELEMENT.** and checkout **DNA.**. But first, note that the `genius_lyrics()` function takes two arguments, `artist` and `song`. Be sure to spell the name of the artist and the song correctly, but don't worry about capitalization. 
 
-First, let's set up our libraries / working environment. 
+First, let's set up our working environment. 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # Load needed libraries
 library(geniusR)
-library(tidyverse)
-library(tidytext)
+library(dplyr)
 ```
 
 `genius_lyrics()` returns only the barebones. Utilizing `dplyr` we can also create a new variable with the line number to help in future [tidytext](https://github.com/juliasilge/tidytext) analysis. This will be covered in a later vignette / post.  
 
 ```{r}
 DNA <- genius_lyrics(artist = "Kendrick Lamar", song = "DNA.")
-DNA %>% 
-  mutate(line = row_number())
+DNA
 
 ```
 
-## Album Level Information
+This function also enables you to get verse level information. This tends to me more popular in hip-hop where songs may have multiple feature artists (thanks to [\@natebarr64](https://github.com/natebarr64) for the help!). `genius_lyrics()` has an argument called `info`. It defaults to `"title"`. If you provide the argument `info = "features"` two new columns appear, `"verse"` and `"vocalist"`.
 
-### Tracklists
+```{r}
+genius_lyrics(artist = "Kendrick Lamar", song = "DNA.", info = "features")
+```
 
-There are two key functions to be utilized at the album level: `genius_tracklist()` and `genius_album()`.
 
-I often only know an album name and none of the track titles. Often I only know the position in the tracklist. For this reason, I created a tool to provide an album tracklist. This function, `genius_tracklist()` takes the arguments `artist` and `album`. Simple enough, right? 
+## Albums
+
+More often than not you will want to get the lyrics for an entire album. This is done easily with `genius_album()`. Just provide the `artist` and `album` name.
+
+```{r}
+DAMN <- genius_album(artist = "Kendrick Lamar", album = "DAMN.")
+
+head(DAMN)
+```
+
+Bam. Easy peasy. Now you have a sweet data frame ready for a tidy text analysis!
+
+
+## Multiple albums or songs
+
+Being able to create a dataframe with multiple artists and albums is extremely useful for tidytext analysis. Instead of having to iterate over your data, `add_genius()` is here to asist you. 
+
+Pipe a dataframe with a column for the album artists and album/track information. The argument `type` is used to indicate if the dataframe contains songs or albums
+
+```{r}
+# Example with 2 different artists and albums
+artist_albums <- tribble(
+ ~artist, ~album,
+ "J. Cole", "KOD",
+ "Sampha", "Process"
+)
+
+
+artist_albums %>%
+ add_genius(artist, album)
+
+
+# Example with 2 different artists and songs
+artist_songs <- tribble(
+ ~artist, ~track,
+ "J. Cole", "Motiv8",
+ "Andrew Bird", "Anonanimal"
+)
+
+artist_songs %>%
+ add_genius(artist, track, type = "lyrics")
+```
+
+
+
+## Tracklists
+
+I often only know an album name and none of the track titles or I only know the position in the tracklist. For this reason, I created a tool to provide an album tracklist. This function, `genius_tracklist()` takes the arguments `artist` and `album`. Simple enough, right? 
 
 Let's get the tracklist for the original release of **DAMN.**. However, real Kendrick fans know that the album was intended to be listened to in chronological *and* reverse order—as is on the collector's release. 
 
@@ -57,24 +101,5 @@ damn_tracks <- genius_tracklist(artist = "Kendrick Lamar", album = "DAMN.")
 damn_tracks %>% 
   arrange(-track_n)
 ```
-
-### Album Lyrics
-
-If lyrics for a full album are what you desire, look no further than `genius_album()`. With a little help from [`purrr`](https://github.com/tidyverse/purrr) you can avoid the annoying iterations! `genius_album()` is designed for simple use. Provide it with only two argument—`artist` and `album`—and you'll have lyrics in no time! 
-
-`genius_album()` returns a tibble with a column of nested data frames where each song's lyrics are contained. Nesting the lyrics was done to have a less cluttered data frame. You can unnest the lyrics by setting `nested = FALSE`. Alternatively, you can pipe it into an `unnest()` call. 
-
-
-```{r}
-DAMN <- genius_album(artist = "Kendrick Lamar", album = "DAMN.", nested = FALSE)
-
-# Alternative method
-#genius_album(artist = "Kendrick Lamar", album = "DAMN.") %>% 
-#  unnest(lyrics)
-
-head(DAMN)
-```
-
-Bam. Easy peasy. Now you have a sweet data frame ready for a tidy text analysis!
 
 

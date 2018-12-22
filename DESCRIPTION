@@ -1,13 +1,13 @@
 Package: geniusR
-Title: What the Package Does (one line, title case)
-Version: 0.0.0.9000
+Title: Easily access song lyrics from Genius.com
+Version: 0.0.1.0
 Authors@R: person("Josiah", "Parry", email = "josiah.parry@yahoo.com", role = c("aut", "cre"))
 Description: Easily access song lyrics in a tidy way.
 Depends: R (>= 3.4.0), dplyr
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

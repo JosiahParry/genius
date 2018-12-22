@@ -3,7 +3,7 @@
 #' Retrieve the lyrics of a song with supplied artist and song name.
 #' @param artist The quoted name of the artist. Spelling matters, capitalization does not.
 #' @param song The quoted name of the song. Spelling matters, capitalization does not.
-#'@param info Default `"title"`, returns the track title. Set to `"simple"` for only lyrics, `"artist"` for the lyrics and artist, or `"all"` to return the lyrics, artist, and title.
+#' @param info Default \code{"title"}, returns the track title. Set to \code{"simple"} for only lyrics, \code{"artist"} for the lyrics and artist, \code{"features"} for vocalist and verse,  \code{"all"} to return artist, track, line, lyric, verse, and vocalist.
 #'
 #'
 #' @examples
