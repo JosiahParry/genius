@@ -3,7 +3,7 @@ Title: Easily access song lyrics from Genius.com
 Version: 0.0.1.0
 Authors@R: person("Josiah", "Parry", email = "josiah.parry@yahoo.com", role = c("aut", "cre"))
 Description: Easily access song lyrics in a tidy way.
-Depends: R (>= 3.4.0), dplyr
+Depends: R (>= 3.4.0), dplyr, purrr
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
