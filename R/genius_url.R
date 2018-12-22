@@ -78,7 +78,7 @@ switch(info,
      simple = {return(select(lyrics, -artist, -track_title, -verse, -vocalist))},
      artist = {return(select(lyrics, -track_title, -verse, -vocalist))},
      title = {return(select(lyrics, -artist, -verse, -vocalist))},
-     features = {return(lyrics)},
+     features = {return(select(lyrics, -artist, -track_title))},
      all = return(select(lyrics, -verse, -vocalist))
     )
 }
