@@ -40,7 +40,7 @@ genius_url <- function(url, info = "title")  {
     # trim white space
     html_text(trim = TRUE) %>%
     # use named vector for cleaning purposes
-    str_replace_all(cleaning) %>% {
+    str_replace_all(cleaning()) %>% {
       # sometimes there is only one line in a song
       # if vector length == one it will try to read the text as a filepath
       # add blank text if it that long
