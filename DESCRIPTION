@@ -1,7 +1,10 @@
 Package: geniusR
 Title: Easily access song lyrics from Genius.com
 Version: 0.0.1.0
-Authors@R: person("Josiah", "Parry", email = "josiah.parry@gmail.com", role = c("aut", "cre"))
+Authors@R: c(
+  person("Josiah", "Parry", email = "josiah.parry@gmail.com", role = c("aut", "cre")),
+  person("Nathan", "Barr", email = "nab222@cornell.edu", role = "ctb")
+  )
 Description: Easily access song lyrics in a tidy way.
 URL: https://github.com/josiahparry/geniusR
 BugReports: https://github.com/josiahparry/geniusR/issues
