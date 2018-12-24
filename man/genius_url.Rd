@@ -9,7 +9,7 @@ genius_url(url, info = "title")
 \arguments{
 \item{url}{The url of song lyrics on Genius}
 
-\item{info}{Default \code{"title"}, returns the track title. Set to \code{"simple"} for only lyrics, \code{"artist"} for the lyrics and artist, \code{"features"} for vocalist and verse,  \code{"all"} to return artist, track, line, lyric, verse, and vocalist.}
+\item{info}{Default \code{"title"}, returns the track title. Set to \code{"simple"} for only lyrics, \code{"artist"} for the lyrics and artist, \code{"features"} for song element and the artist of that element,  \code{"all"} to return artist, track, line, lyric, element, and element artist.}
 }
 \description{
 This function is used inside of the `genius_lyrics()` function. Given a url to a song on Genius, this function returns a tibble where each row is one line. Pair this function with `gen_song_url()` for easier access to song lyrics.

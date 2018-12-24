@@ -2,10 +2,10 @@
 % Please edit documentation in R/utils.R
 \name{cleaning}
 \alias{cleaning}
-\title{vector used for cleaning lines from urls}
+\title{Function which produces a vector to be used in string cleaning from scraping there are a lot of hard coded values in here and will need to be adapted for the weird nuances.}
 \usage{
 cleaning()
 }
 \description{
-vector used for cleaning lines from urls
+Function which produces a vector to be used in string cleaning from scraping there are a lot of hard coded values in here and will need to be adapted for the weird nuances.
 }
