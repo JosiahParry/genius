@@ -37,8 +37,7 @@ prep_info <- function(input) {
 }
 
 
-#' vector used for cleaning lines from urls
-# vector for cleaning names
+#' Function which produces a vector to be used in string cleaning from scraping there are a lot of hard coded values in here and will need to be adapted for the weird nuances.
 cleaning <- function() {
     # putting randomblackdude in here because I can't figure out a regex for him and he's throwing me off
     clean_vec <- c("([^RandomBlackDude][a-z0-9]{2,})([[:upper:]])" = "\\1\n\\2", # turn camel case into new lines
