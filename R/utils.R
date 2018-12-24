@@ -50,7 +50,10 @@ cleaning <- function() {
     "(\\])(\")" = "\\1\n\\2",
     "(\")(\\[)" = "\\1\n\\2",
     # if a question mark directly touches a word or number make new lines
-    "(\\?)([[:alpha:]])" = "\\1\n\\2")
+    "(\\?)([[:alpha:]])" = "\\1\n\\2",
+    # roger waters, you're a pain: comfortably numb, issue # 4
+    # https://github.com/JosiahParry/geniusR/issues/4
+    "(\\])(\\[)" = "\\1\n\\2")
 
     return(clean_vec)
 }
