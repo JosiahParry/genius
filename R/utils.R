@@ -40,7 +40,8 @@ prep_info <- function(input) {
 #' vector used for cleaning lines from urls
 # vector for cleaning names
 cleaning <- function() {
-    clean_vec <- c("([a-z0-9]{2,})([[:upper:]])" = "\\1\n\\2", # turn camel case into new lines
+    # putting randomblackdude in here because I can't figure out a regex for him and he's throwing me off
+    clean_vec <- c("([^RandomBlackDude][a-z0-9]{2,})([[:upper:]])" = "\\1\n\\2", # turn camel case into new lines
     "(\\]|\\))([[:upper:]])" = "\\1\n\\2", # letters immediately after closing brackets new lines
     # brackets with producer info into new lines
     "(\\[.{2,100}\\])" ="\n\\1\n",
@@ -54,4 +55,3 @@ cleaning <- function() {
 
     return(clean_vec)
 }
-
