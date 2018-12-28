@@ -3,6 +3,8 @@ Quickstart: geniusR
 Josiah Parry
 12/21/2018
 
+[![CRAN status](https://www.r-pkg.org/badges/version/geniusR)](https://cran.r-project.org/package=geniusR) [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+
 This package was created to provide an easy method to access lyrics as text data using [Genius](genius.com).
 
 Installation
@@ -48,7 +50,7 @@ emotions_math <- genius_album(artist = "Margaret Glaspy", album = "Emotions and 
 emotions_math
 ```
 
-    ## # A tibble: 372 x 4
+    ## # A tibble: 370 x 4
     ##    track_title       track_n  line lyric                                 
     ##    <chr>               <int> <int> <chr>                                 
     ##  1 Emotions And Math       1     1 Oh when I got you by my side          
@@ -61,7 +63,7 @@ emotions_math
     ##  8 Emotions And Math       1     8 Of emotions and math                  
     ##  9 Emotions And Math       1     9 Oh it's a shame                       
     ## 10 Emotions And Math       1    10 And I'm to blame                      
-    ## # ... with 362 more rows
+    ## # ... with 360 more rows
 
 Multiple Albums / Songs
 -----------------------
@@ -83,10 +85,25 @@ artist_albums %>%
  add_genius(artist, album)
 ```
 
+    ## Joining, by = c("track_title", "track_n", "track_url")
+    ## Joining, by = c("track_title", "track_n", "track_url")
+
     ## Joining, by = c("artist", "album")
 
-    ## # A tibble: 0 x 2
-    ## # ... with 2 variables: artist <chr>, album <chr>
+    ## # A tibble: 1,320 x 6
+    ##    artist  album track_title track_n  line lyric                           
+    ##    <chr>   <chr> <chr>         <int> <int> <chr>                           
+    ##  1 J. Cole KOD   Intro (KOD)       1     1 Can someone please turn off my …
+    ##  2 J. Cole KOD   Intro (KOD)       1     2 My thoughts are racing all the …
+    ##  3 J. Cole KOD   Intro (KOD)       1     3 There is no reason or no rhyme  
+    ##  4 J. Cole KOD   Intro (KOD)       1     4 I'm trapped inside myself       
+    ##  5 J. Cole KOD   Intro (KOD)       1     5 A newborn baby has two primary …
+    ##  6 J. Cole KOD   Intro (KOD)       1     6 "Laughter, which says, \"I love…
+    ##  7 J. Cole KOD   Intro (KOD)       1     7 "Or crying, which says, \"This …
+    ##  8 J. Cole KOD   Intro (KOD)       1     8 There are many ways to deal wit…
+    ##  9 J. Cole KOD   Intro (KOD)       1     9 Choose wisely                   
+    ## 10 J. Cole KOD   Intro (KOD)       1    10 At the bottom of the hourglass  
+    ## # ... with 1,310 more rows
 
 This can be easily replicated with multiple songs as well.
 
@@ -104,7 +121,7 @@ artist_songs %>%
 
     ## Joining, by = c("artist", "track")
 
-    ## # A tibble: 71 x 5
+    ## # A tibble: 102 x 5
     ##    artist  track  track_title  line lyric                                  
     ##    <chr>   <chr>  <chr>       <int> <chr>                                  
     ##  1 J. Cole Motiv8 Motiv8          1 You really wanna know who Superman is? 
@@ -117,7 +134,7 @@ artist_songs %>%
     ##  8 J. Cole Motiv8 Motiv8          8 Spill promethazine inside a double cup 
     ##  9 J. Cole Motiv8 Motiv8          9 Double up my cream, now that's a Doubl…
     ## 10 J. Cole Motiv8 Motiv8         10 Please don't hit my phone if it ain't …
-    ## # ... with 61 more rows
+    ## # ... with 92 more rows
 
 Song Lyrics
 -----------
@@ -216,7 +233,7 @@ Now that we have the url, feed it into `genius_url()`.
 genius_url(piano_url, info = "simple")
 ```
 
-    ## # A tibble: 13 x 2
+    ## # A tibble: 12 x 2
     ##     line lyric                                                             
     ##    <int> <chr>                                                             
     ##  1     1 No one knows me like the piano in my mother's home                
@@ -229,9 +246,8 @@ genius_url(piano_url, info = "simple")
     ##  8     8 And you know I'll be back home                                    
     ##  9     9 An angel by her side, all of the times I knew we couldn't cope    
     ## 10    10 They said that it's her time, no tears in sight, I kept the feeli…
-    ## 11    11 And you took hold of me and never, never, never let me go         
-    ## 12    12 'Cause no one knows me like the piano in my mother's home         
-    ## 13    13 In my mother's home
+    ## 11    11 And you took hold of me and never, never, never let me go'Cause n…
+    ## 12    12 In my mother's home
 
 ------------------------------------------------------------------------
 
