@@ -1,5 +1,5 @@
 ---
-title: "geniusR Basics"
+title: "genius Basics"
 author: "Josiah Parry"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -9,9 +9,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# geniusR
+# genius
 
-geniusR enables quick and easy download of song lyrics. The intent behind the package is to be able to perform text based analyses on songs in a tidy[text] format. Song lyrics come from [Genius](https://genius.com) (formerly Rap Genius), the most widely accessible platform for lyrics. 
+genius enables quick and easy download of song lyrics. The intent behind the package is to be able to perform text based analyses on songs in a tidy[text] format. Song lyrics come from [Genius](https://genius.com) (formerly Rap Genius), the most widely accessible platform for lyrics. 
 
 The functions in this package enable easy access of individual song lyrics, album tracklists, and lyrics to whole albums. 
 
@@ -23,7 +23,7 @@ First, let's set up our working environment.
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 # Load needed libraries
-library(geniusR)
+library(genius)
 library(dplyr)
 ```
 

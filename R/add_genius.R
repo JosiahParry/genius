@@ -33,6 +33,7 @@
 #'
 #' @export
 #' @import dplyr
+#' @import purrr
 #'
 #'
 

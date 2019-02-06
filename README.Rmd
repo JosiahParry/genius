@@ -1,10 +1,13 @@
 ---
-title: "Quickstart: geniusR"
+title: "Quickstart: genius"
 author: "Josiah Parry"
 date: "12/21/2018"
 output: github_document
 ---
 
+
+[![CRAN status](https://www.r-pkg.org/badges/version/genius)](https://cran.r-project.org/package=genius)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 This package was created to provide an easy method to access lyrics as text data using [Genius](genius.com). 
   
@@ -12,12 +15,12 @@ This package was created to provide an easy method to access lyrics as text data
 This package must be installed from GitHub.
 
 ```{r, eval = FALSE}
-devtools::install_github("josiahparry/geniusR")
+devtools::install_github("josiahparry/genius")
 ```
 
 Load the package:
 ```{r, message=FALSE}
-library(geniusR)
+library(genius)
 library(tidyverse)
 ```
 

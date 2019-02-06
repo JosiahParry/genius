@@ -1,9 +1,9 @@
-Quickstart: geniusR
+Quickstart: genius
 ================
 Josiah Parry
 12/21/2018
 
-[![CRAN status](https://www.r-pkg.org/badges/version/geniusR)](https://cran.r-project.org/package=geniusR) [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![CRAN status](https://www.r-pkg.org/badges/version/genius)](https://cran.r-project.org/package=genius) [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 This package was created to provide an easy method to access lyrics as text data using [Genius](genius.com).
 
@@ -13,13 +13,13 @@ Installation
 This package must be installed from GitHub.
 
 ``` r
-devtools::install_github("josiahparry/geniusR")
+devtools::install_github("josiahparry/genius")
 ```
 
 Load the package:
 
 ``` r
-library(geniusR)
+library(genius)
 library(tidyverse)
 ```
 
@@ -41,9 +41,6 @@ This returns a tidy data frame with three columns:
 emotions_math <- genius_album(artist = "Margaret Glaspy", album = "Emotions and Math")
 ```
 
-    ## Warning: The `printer` argument is soft-deprecated as of rlang 0.3.0.
-    ## This warning is displayed once per session.
-
     ## Joining, by = c("track_title", "track_n", "track_url")
 
 ``` r
@@ -63,7 +60,7 @@ emotions_math
     ##  8 Emotions And Math       1     8 Of emotions and math                  
     ##  9 Emotions And Math       1     9 Oh it's a shame                       
     ## 10 Emotions And Math       1    10 And I'm to blame                      
-    ## # ... with 360 more rows
+    ## # … with 360 more rows
 
 Multiple Albums / Songs
 -----------------------
@@ -90,7 +87,7 @@ artist_albums %>%
 
     ## Joining, by = c("artist", "album")
 
-    ## # A tibble: 1,320 x 6
+    ## # A tibble: 1,319 x 6
     ##    artist  album track_title track_n  line lyric                           
     ##    <chr>   <chr> <chr>         <int> <int> <chr>                           
     ##  1 J. Cole KOD   Intro (KOD)       1     1 Can someone please turn off my …
@@ -103,7 +100,7 @@ artist_albums %>%
     ##  8 J. Cole KOD   Intro (KOD)       1     8 There are many ways to deal wit…
     ##  9 J. Cole KOD   Intro (KOD)       1     9 Choose wisely                   
     ## 10 J. Cole KOD   Intro (KOD)       1    10 At the bottom of the hourglass  
-    ## # ... with 1,310 more rows
+    ## # … with 1,309 more rows
 
 This can be easily replicated with multiple songs as well.
 
@@ -134,7 +131,7 @@ artist_songs %>%
     ##  8 J. Cole Motiv8 Motiv8          8 Spill promethazine inside a double cup 
     ##  9 J. Cole Motiv8 Motiv8          9 Double up my cream, now that's a Doubl…
     ## 10 J. Cole Motiv8 Motiv8         10 Please don't hit my phone if it ain't …
-    ## # ... with 92 more rows
+    ## # … with 92 more rows
 
 Song Lyrics
 -----------
@@ -162,7 +159,7 @@ memory_street
     ##  8 Memory Street     8 All the times I took forever to forget?
     ##  9 Memory Street     9 Call the guards                        
     ## 10 Memory Street    10 I'm at the gates                       
-    ## # ... with 17 more rows
+    ## # … with 17 more rows
 
 This returns a `tibble` with three columns `title`, `text`, and `line`. However, you can specifiy additional arguments to control the amount of information to be returned using the `info` argument.
 
