@@ -11,7 +11,7 @@ vignette: >
 
 # geniusR
 
-geniusR enables quick and easy download of song lyrics. The intent behind the package is to be able to perform text based analyses on songs in a tidy[text] format. Song lyrics come from [Genius](https://genius.com) (formerly Rap Genius), the most widly accessible platform for lyrics. 
+geniusR enables quick and easy download of song lyrics. The intent behind the package is to be able to perform text based analyses on songs in a tidy[text] format. Song lyrics come from [Genius](https://genius.com) (formerly Rap Genius), the most widely accessible platform for lyrics. 
 
 The functions in this package enable easy access of individual song lyrics, album tracklists, and lyrics to whole albums. 
 
@@ -57,7 +57,7 @@ Bam. Easy peasy. Now you have a sweet data frame ready for a tidy text analysis!
 
 ## Multiple albums or songs
 
-Being able to create a dataframe with multiple artists and albums is extremely useful for tidytext analysis. Instead of having to iterate over your data, `add_genius()` is here to asist you. 
+Being able to create a dataframe with multiple artists and albums is extremely useful for tidytext analysis. Instead of having to iterate over your data, `add_genius()` is here to assist you. 
 
 Pipe a dataframe with a column for the album artists and album/track information. The argument `type` is used to indicate if the dataframe contains songs or albums
 
