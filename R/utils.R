@@ -1,10 +1,12 @@
 #' Form of genius_album that can handle errors
+#' @param ... arguments that would be passed to `genius_album()`
 #' @importFrom purrr possibly
 #' @importFrom tibble as_tibble
 #' @export
 possible_album <- possibly(genius_album, otherwise = as_tibble())
 
 #' Form of genius_lyrics that can handle errors
+#' @param ... arguments that would be passed to `genius_lyrics()`
 #' @importFrom purrr possibly
 #' @importFrom tibble as_tibble
 #' @export
@@ -44,7 +46,7 @@ cleaning <- function() {
     # brackets with producer info into new lines
     "(\\[.{2,100}\\])" ="\n\\1\n",
     # rip smart quotes
-    "’" = "'",
+    "\u2019" = "'",
     # if quotes follow or precede brackets fix lines
     "(\\])(\")" = "\\1\n\\2",
     "(\")(\\[)" = "\\1\n\\2",

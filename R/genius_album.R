@@ -1,3 +1,5 @@
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("track_url", "lyrics"))
+
 #' Retrieve song lyrics for an album
 #'
 #' Obtain the lyrics to an album in a tidy format.
@@ -8,8 +10,10 @@
 #'
 #' @examples
 #'
+#'\dontrun{
 #' genius_album(artist = "Petal", album = "Comfort EP")
 #' genius_album(artist = "Fit For A King", album = "Deathgrip")
+#'}
 #'
 #' @export
 #' @import dplyr

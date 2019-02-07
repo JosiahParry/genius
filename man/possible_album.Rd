@@ -6,6 +6,9 @@
 \usage{
 possible_album(...)
 }
+\arguments{
+\item{...}{arguments that would be passed to `genius_album()`}
+}
 \description{
 Form of genius_album that can handle errors
 }

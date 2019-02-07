@@ -18,7 +18,9 @@ Obtain the lyrics to an album in a tidy format.
 }
 \examples{
 
+\dontrun{
 genius_album(artist = "Petal", album = "Comfort EP")
 genius_album(artist = "Fit For A King", album = "Deathgrip")
+}
 
 }

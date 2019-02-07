@@ -1,3 +1,9 @@
+if(getRversion() >= "2.15.1")  {
+
+  utils::globalVariables(c("type", "lyric", "line", "meta",
+                           "element_artist", "element", "track_title"))
+}
+
 #' Use Genius url to retrieve lyrics
 #'
 #' This function is used inside of the `genius_lyrics()` function. Given a url to a song on Genius, this function returns a tibble where each row is one line. Pair this function with `gen_song_url()` for easier access to song lyrics.

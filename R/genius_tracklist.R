@@ -1,3 +1,6 @@
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("track_n"))
+
+
 #' Create a tracklist of an album
 #'
 #' Creates a `tibble` containing all track titles for a given artist and album. This function is used internally in `genius_album()`.

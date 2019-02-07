@@ -6,6 +6,9 @@
 \usage{
 possible_lyrics(...)
 }
+\arguments{
+\item{...}{arguments that would be passed to `genius_lyrics()`}
+}
 \description{
 Form of genius_lyrics that can handle errors
 }
