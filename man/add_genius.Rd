@@ -19,6 +19,7 @@ add_genius(data, artist, type_group, type = "album")
 This function is to be used to build on a data frame with artist and album/track information. Ideal via the spotifyr package.
 }
 \examples{
+\dontrun{
 Example with 2 different artists and albums
 artist_albums <- tribble(
  ~artist, ~album,
@@ -39,5 +40,6 @@ artist_songs <- tribble(
 )
 artist_songs \%>\%
  add_genius(artist, track, type = "lyrics")
+}
 
 }

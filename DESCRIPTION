@@ -15,13 +15,14 @@ Imports:
   rvest,
   stringr,
   tidyr,
-  purrr
+  purrr,
+  readr, 
+  tibble
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
 Suggests: 
-    spotifyr,
     knitr,
     rmarkdown,
     testthat

@@ -8,6 +8,7 @@
 #' @param type This is a single value character string of either `"album"` or `"lyrics"`. This tells the function what kind of lyrics to pull. This needs to be in line with `type_group`
 #'
 #' @examples
+#' \dontrun{
 #' Example with 2 different artists and albums
 #' artist_albums <- tribble(
 #'  ~artist, ~album,
@@ -29,7 +30,7 @@
 
 #' artist_songs %>%
 #'  add_genius(artist, track, type = "lyrics")
-
+#'}
 #'
 #' @export
 #' @import dplyr
