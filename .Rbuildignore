@@ -1,3 +1,9 @@
+^cran-comments\.md$
+^README\.Rmd$
+^README\.md$
+^CRAN-RELEASE$
+^Readme\.md$
+^R/prep_info\.R$
 ^\.Rhistory$
 ^data$
 ^dev$

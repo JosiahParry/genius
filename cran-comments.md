@@ -8,3 +8,11 @@
 0 errors | 0 warnings | 1 note
 
 * This is a new release.
+
+
+## Resubmission
+This is a resubmission. I have made the following changes:
+
+* Converted the DESCRIPTION title to title case.
+* Altered the description to be less ambiguous.
+* Refer to Genius as its name, not the webpage.
