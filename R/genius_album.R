@@ -23,19 +23,13 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("track_url", "lyrics"))
 
 genius_album <- function(artist = NULL, album = NULL, info = "simple") {
 
-  # Obtain tracklist from genius_tracklist
   tracks <-  genius_tracklist(artist, album)
 
   album <- tracks %>%
-
-    # Iterate over the url to the song title
     mutate(lyrics = map(track_url, genius_url, info)) %>%
-
-    # Unnest the tibble with lyrics
     unnest(lyrics) %>%
     right_join(tracks) %>%
     select(-track_url)
-
 
 
   return(album)
