@@ -7,6 +7,8 @@ Josiah Parry
 
 This package was created to provide an easy method to access lyrics as text data using [Genius](genius.com).
 
+Access to this code as an API or via Python go [here](https://github.com/JosiahParry/genius-api)
+
 Installation
 ------------
 
