@@ -10,10 +10,10 @@ This package was created to provide an easy method to access lyrics as text data
 Installation
 ------------
 
-This package must be installed from GitHub.
+This package is available from CRAN.
 
 ``` r
-devtools::install_github("josiahparry/genius")
+install.packages("genius")
 ```
 
 Load the package:
