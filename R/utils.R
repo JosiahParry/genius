@@ -40,6 +40,7 @@ prep_info <- function(input) {
                     #"," = "",
                     "\u00E9" = "e",
                     "\u00F6" = "o",
+                    "\u00F8" = "",
                     "[[:punct:]]" = " ",
                     "[[:blank:]]+" = " ")) %>%
     str_trim()
