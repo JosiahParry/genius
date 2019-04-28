@@ -13,6 +13,14 @@ possible_album <- possibly(genius_album, otherwise = as_tibble())
 possible_lyrics <- possibly(genius_lyrics, otherwise = as_tibble())
 
 
+#' Form of genius_url that can handle errors
+#' @param ... arguments that would be passed to `genius_url()`
+#' @importFrom purrr possibly
+#' @importFrom tibble as_tibble
+#' @export
+possible_url <- possibly(genius_url, otherwise = as_tibble())
+
+
 #' Prepares input strings for `gen_song_url()`
 #'
 #' Applies a number of regular expressions to prepare the input to match Genius url format

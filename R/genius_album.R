@@ -26,7 +26,7 @@ genius_album <- function(artist = NULL, album = NULL, info = "simple") {
   tracks <-  genius_tracklist(artist, album)
 
   album <- tracks %>%
-    mutate(lyrics = map(track_url, genius_url, info)) %>%
+    mutate(lyrics = map(track_url, possible_url, info)) %>%
     unnest(lyrics) %>%
     right_join(tracks) %>%
     select(-track_url)
