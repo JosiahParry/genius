@@ -47,7 +47,7 @@ calc_self_sim <- function(df, lyric_col, output = "tidy") {
          tidy = {
            reshape2::melt(self_sim) %>%
              as_tibble() %>%
-             rename(x_id = Var1, y_id = Var2, same = value) %>%
+             rename(x_id = Var1, y_id = Var2, identical = value) %>%
              mutate(word_x = lyric_vec[x_id],
                     word_y = lyric_vec[y_id]) %>%
              return()
