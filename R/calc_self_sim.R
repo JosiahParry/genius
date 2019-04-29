@@ -1,0 +1,56 @@
+#' Calculate a self-similarity matrix
+#'
+#' Calculate the self-similarity matrix for song lyrics.
+#'
+#' @param df The data frame containing song lyrics. Usually from the output of \code{`genius_lyrics()`}.
+#' @param lyric_col The unquoted name of the column containing lyrics
+#' @param output Determine the type of output. Default is \code{"tidy"}. Set to \code{"matrix"} for the raw matrix.
+#'
+#' @examples
+#'
+#'\dontrun{
+#' bad_habits <- genius_lyrics("Alix", "Bad Habits")
+#' self_sim <- calc_self_sim(bad_habits, lyric)
+#'}
+#'
+#' @export
+#' @import dplyr
+#' @importFrom tidytext unnest_tokens
+#' @importFrom reshape2 melt
+#' @importFrom tibble as_tibble
+#' @importFrom dplyr rename
+
+calc_self_sim <- function(df, lyric_col, output = "tidy") {
+  lyric_vec <- df %>%
+    unnest_tokens(word, lyric) %>%
+    pull(word)
+
+  # calculate matrix dimensions
+  mat_size <- length(lyric_vec)
+
+  # create matrix of the words
+  lyric_mat <- matrix(lyric_vec, nrow = mat_size, ncol = mat_size)
+
+  # initialize empty self-sim matrix
+  self_sim <- matrix(nrow = mat_size, ncol = mat_size)
+
+  # iterate through matrix and evlaute similarity
+  for (col in 1:mat_size) {
+    for(row in 1:mat_size) {
+      self_sim[row, col] <- (self_sim[row, col] <- lyric_mat[row, col] == lyric_mat[col,col])
+    }
+  }
+
+
+  switch(output,
+         matrix = {return(self_sim)},
+         tidy = {
+           reshape2::melt(self_sim) %>%
+             as_tibble() %>%
+             rename(x_id = Var1, y_id = Var2, same = value) %>%
+             mutate(word_x = lyric_vec[x_id],
+                    word_y = lyric_vec[y_id]) %>%
+             return()
+         })
+
+}
