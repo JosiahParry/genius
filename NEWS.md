@@ -1,4 +1,11 @@
-## `genius` 0.0.1.0
+## `genius` v.2.2.0
+
+May 4th, 2019
+
+* New functionality was added to `genius`. The function `calc_self_sim()` enables the user to create a self-similarity matrix. The default output is a _tidy_ data-frame that is ready for plotting. Additional arguments can be used to remove stop words. Stop word functionality is accessed via the [`tidytext`](https://github.com/juliasilge/tidytext) package. 
+
+----------
+## `genius` v.2.1.0
 
 April 28th, 2019
 
@@ -7,7 +14,7 @@ April 28th, 2019
 
 
 -------------
-
+## `genius` v.2.0.0
 April 10th, 2019
 
 The name of this package has been changed from `geniusR` to `genius` due to a name conflict on **CRAN**.
