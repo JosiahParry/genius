@@ -5,6 +5,9 @@
 #' @param df The data frame containing song lyrics. Usually from the output of \code{`genius_lyrics()`}.
 #' @param lyric_col The unquoted name of the column containing lyrics
 #' @param output Determine the type of output. Default is \code{"tidy"}. Set to \code{"matrix"} for the raw matrix.
+#' @param remove_stop_words Optional argument to remove stop words from self-similarity matrix.
+#' @param language Language of stop words. See \code{tidytext::get_stopwords()}.
+#' @param source Stop words source. See \code{tidytext::get_stopwords()}.
 #'
 #' @examples
 #'
@@ -15,15 +18,20 @@
 #'
 #' @export
 #' @import dplyr
-#' @importFrom tidytext unnest_tokens
+#' @importFrom tidytext unnest_tokens get_stopwords
 #' @importFrom reshape2 melt
 #' @importFrom tibble as_tibble
-#' @importFrom dplyr rename
 
-calc_self_sim <- function(df, lyric_col, output = "tidy") {
+calc_self_sim <- function(df, lyric_col, output = "tidy", remove_stop_words = FALSE, language = "en", source = "snowball") {
   lyric_vec <- df %>%
-    unnest_tokens(word, lyric) %>%
-    pull(word)
+    unnest_tokens(word, lyric) %>% {
+      if (remove_stop_words) {
+        anti_join(., get_stopwords(language = language, source = source)) %>%
+          pull(word)
+      } else {
+        pull(word)
+      }
+    }
 
   # calculate matrix dimensions
   mat_size <- length(lyric_vec)

@@ -4,7 +4,8 @@
 \alias{calc_self_sim}
 \title{Calculate a self-similarity matrix}
 \usage{
-calc_self_sim(df, lyric_col, output = "tidy")
+calc_self_sim(df, lyric_col, output = "tidy",
+  remove_stop_words = FALSE, language = "en", source = "snowball")
 }
 \arguments{
 \item{df}{The data frame containing song lyrics. Usually from the output of \code{`genius_lyrics()`}.}
@@ -12,6 +13,12 @@ calc_self_sim(df, lyric_col, output = "tidy")
 \item{lyric_col}{The unquoted name of the column containing lyrics}
 
 \item{output}{Determine the type of output. Default is \code{"tidy"}. Set to \code{"matrix"} for the raw matrix.}
+
+\item{remove_stop_words}{Optional argument to remove stop words from self-similarity matrix.}
+
+\item{language}{Language of stop words. See \code{tidytext::get_stopwords()}.}
+
+\item{source}{Stop words source. See \code{tidytext::get_stopwords()}.}
 }
 \description{
 Calculate the self-similarity matrix for song lyrics.
