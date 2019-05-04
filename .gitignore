@@ -4,3 +4,10 @@
 .Ruserdata
 inst/doc
 prep_info.R
+data
+data-raw
+.DS_Store
+CRAN-RELEASE
+genius-similarity
+README.Rmd
+dev

@@ -1,13 +1,13 @@
 Quickstart: genius
 ================
-Josiah Parry
-12/21/2018
 
-[![CRAN status](https://www.r-pkg.org/badges/version/genius)](https://cran.r-project.org/package=genius) [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+[![CRAN status](https://www.r-pkg.org/badges/version/genius)](https://cran.r-project.org/package=genius)
+[![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/genius?color=d3a167)](https://r-pkg.org/pkg/genius)
+[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
 This package was created to provide an easy method to access lyrics as text data using [Genius](genius.com).
 
-Access to this code as an API or via Python go [here](https://github.com/JosiahParry/genius-api)
+Access to this code as an API or via Python [here](https://github.com/JosiahParry/genius-api)
 
 Installation
 ------------
@@ -128,7 +128,7 @@ artist_songs %>%
     ##  3 J. Cole Motiv8 Motiv8          3 I like him                             
     ##  4 J. Cole Motiv8 Motiv8          4 I think he's pretty cool               
     ##  5 J. Cole Motiv8 Motiv8          5 He's my idol                           
-    ##  6 J. Cole Motiv8 Motiv8          6 I can't have no sympathy for fuck nigg…
+    ##  6 J. Cole Motiv8 Motiv8          6 I can't have no sympathy for fuck…
     ##  7 J. Cole Motiv8 Motiv8          7 All this shit I've seen done made my b…
     ##  8 J. Cole Motiv8 Motiv8          8 Spill promethazine inside a double cup 
     ##  9 J. Cole Motiv8 Motiv8          9 Double up my cream, now that's a Doubl…
@@ -168,7 +168,7 @@ This returns a `tibble` with three columns `title`, `text`, and `line`. However,
 -   `info = "title"` (default): Return the lyrics, line number, and song title.
 -   `info = "simple"`: Return just the lyrics and line number.
 -   `info = "artist"`: Return the lyrics, line number, and artist.
--   `info = "features"`: Returns the lyrics, line number, artist, verse, and vocalist.
+-   `info = "features"`: Returns the lyrics, line number, artist, verse, and vocalist if available.
 -   `info = "all"`: Return lyrics, line number, song title, artist.
 
 Tracklists
@@ -199,7 +199,7 @@ genius_tracklist(artist = "Basement", album = "Colourmeinkindness")
 Nitty Gritty
 ------------
 
-`genius_lyrics()` generates a url to Genius which is fed to `genius_url()`, the function that does the heavy lifting of actually fetching lyrics.
+`genius_lyrics()` generates a url via `gen_song_url()` to Genius which is fed to `genius_url()`, the function that does the heavy lifting of actually fetching lyrics.
 
 I have not figured out all of the patterns that are used for generating the Genius.com urls, so errors are bound to happen. If `genius_lyrics()` returns an error. Try utilizing `genius_tracklist()` and `genius_url()` together to get the song lyrics.
 
