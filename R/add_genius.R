@@ -36,17 +36,23 @@
 #'
 #'
 
-add_genius <- function(data, artist, type_group, type = "album") {
-    genius_funcs <- list(album = possible_album, lyrics = possible_lyrics)
-    artist <- enquo(artist)
-    type_group <- enquo(type_group)
+add_genius <- function(data, artist, title, type) {
+  genius_funcs <- list(album = possible_album, lyrics = possible_lyrics)
+  artist <- enquo(artist)
+  type_group <- enquo(type_group)
+  type <- enquo(type)
 
-    data %>%
-        distinct(!!artist, !!type_group) %>%
-        mutate(lyrics = map2(!!artist, !!type_group,  genius_funcs[[type]])) %>%
+
+  data %>%
+    mutate(lyrics = case_when(
+      !!type == "album" ~ map2(.x = !!artist, .y = !!title, genius_funcs[["album"]]),
+      !!type == "lyrics" ~ map2(.x = !!artist, .y = !!title, genius_funcs[["lyrics"]])
+    )
+    ) %>%
     inner_join(data) %>%
-      unnest() %>%
-      as_tibble() %>%
-      return()
+    unnest() %>%
+    as_tibble() %>%
+    return()
+
 }
 
