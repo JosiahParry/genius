@@ -4,8 +4,8 @@
 #'
 #' @param data This is a dataframe with one column for the artist name, and the other column being either the track title or the album title.
 #' @param artist This is the column which has artist title information
-#' @param type_group This is the column that has either album titles or track titles.
-#' @param type This is a single value character string of either `"album"` or `"lyrics"`. This tells the function what kind of lyrics to pull. This needs to be in line with `type_group`
+#' @param type_group This is the column that has either album titles track titles, or both.
+#' @param type This is a single value character string of either "album" or "lyrics". This tells the function what kind of lyrics to pull. Alternatively, this can be a column with the value of "album" or "lyrics" associated with each row.
 #'
 #' @examples
 #' \donttest{
@@ -36,17 +36,23 @@
 #'
 #'
 
-add_genius <- function(data, artist, type_group, type = "album") {
-    genius_funcs <- list(album = possible_album, lyrics = possible_lyrics)
-    artist <- enquo(artist)
-    type_group <- enquo(type_group)
+add_genius <- function(data, artist, title, type = "album") {
+  genius_funcs <- list(album = possible_album, lyrics = possible_lyrics)
+  artist <- enquo(artist)
+  type_group <- enquo(type_group)
+  type <- enquo(type)
 
-    data %>%
-        distinct(!!artist, !!type_group) %>%
-        mutate(lyrics = map2(!!artist, !!type_group,  genius_funcs[[type]])) %>%
+
+  data %>%
+    mutate(lyrics = case_when(
+      !!type == "album" ~ map2(.x = !!artist, .y = !!title, genius_funcs[["album"]]),
+      !!type == "lyrics" ~ map2(.x = !!artist, .y = !!title, genius_funcs[["lyrics"]])
+    )
+    ) %>%
     inner_join(data) %>%
-      unnest() %>%
-      as_tibble() %>%
-      return()
+    unnest() %>%
+    as_tibble() %>%
+    return()
+
 }
 

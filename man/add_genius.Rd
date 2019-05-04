@@ -4,16 +4,16 @@
 \alias{add_genius}
 \title{Add lyrics to a data frame}
 \usage{
-add_genius(data, artist, type_group, type = "album")
+add_genius(data, artist, title, type = "album")
 }
 \arguments{
 \item{data}{This is a dataframe with one column for the artist name, and the other column being either the track title or the album title.}
 
 \item{artist}{This is the column which has artist title information}
 
-\item{type_group}{This is the column that has either album titles or track titles.}
+\item{type}{This is a single value character string of either "album" or "lyrics". This tells the function what kind of lyrics to pull. Alternatively, this can be a column with the value of "album" or "lyrics" associated with each row.}
 
-\item{type}{This is a single value character string of either `"album"` or `"lyrics"`. This tells the function what kind of lyrics to pull. This needs to be in line with `type_group`}
+\item{type_group}{This is the column that has either album titles track titles, or both.}
 }
 \description{
 This function is to be used to build on a data frame with artist and album/track information. Ideal via the spotifyr package.
