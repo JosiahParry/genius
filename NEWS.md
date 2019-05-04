@@ -3,7 +3,7 @@
 May 4th, 2019
 
 * New functionality was added to `genius`. The function `calc_self_sim()` enables the user to create a self-similarity matrix. The default output is a _tidy_ data-frame that is ready for plotting. Additional arguments can be used to remove stop words. Stop word functionality is accessed via the [`tidytext`](https://github.com/juliasilge/tidytext) package. 
-
+* `add_genius()` has been modified to be able to accept a column for the `type`. This will enable you to mix both single songs with entire albums. The `type_group` column has been renamed to `title` to be more coherent. This is a potentially breakding change.
 ----------
 ## `genius` v.2.1.0
 

@@ -4,7 +4,7 @@
 #'
 #' @param data This is a dataframe with one column for the artist name, and the other column being either the track title or the album title.
 #' @param artist This is the column which has artist title information
-#' @param type_group This is the column that has either album titles track titles, or both.
+#' @param title This is the column that has either album titles, track titles, or both.
 #' @param type This is a single value character string of either "album" or "lyrics". This tells the function what kind of lyrics to pull. Alternatively, this can be a column with the value of "album" or "lyrics" associated with each row.
 #'
 #' @examples

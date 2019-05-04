@@ -11,9 +11,9 @@ add_genius(data, artist, title, type = "album")
 
 \item{artist}{This is the column which has artist title information}
 
-\item{type}{This is a single value character string of either "album" or "lyrics". This tells the function what kind of lyrics to pull. Alternatively, this can be a column with the value of "album" or "lyrics" associated with each row.}
+\item{title}{This is the column that has either album titles, track titles, or both.}
 
-\item{type_group}{This is the column that has either album titles track titles, or both.}
+\item{type}{This is a single value character string of either "album" or "lyrics". This tells the function what kind of lyrics to pull. Alternatively, this can be a column with the value of "album" or "lyrics" associated with each row.}
 }
 \description{
 This function is to be used to build on a data frame with artist and album/track information. Ideal via the spotifyr package.
