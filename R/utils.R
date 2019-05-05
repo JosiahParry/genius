@@ -3,14 +3,14 @@
 #' @importFrom purrr possibly
 #' @importFrom tibble as_tibble
 #' @export
-possible_album <- quietly(possibly(genius_album, otherwise = as_tibble()))
+possible_album <- possibly(genius_album, otherwise = as_tibble())
 
 #' Form of genius_lyrics that can handle errors
 #' @param ... arguments that would be passed to `genius_lyrics()`
 #' @importFrom purrr possibly
 #' @importFrom tibble as_tibble
 #' @export
-possible_lyrics <- quietyly(possibly(genius_lyrics, otherwise = as_tibble()))
+possible_lyrics <- possibly(genius_lyrics, otherwise = as_tibble())
 
 
 #' Form of genius_url that can handle errors
