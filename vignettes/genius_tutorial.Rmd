@@ -97,11 +97,6 @@ album_lyrics
 
 What is important to note here is that the warnings for this function are somewhat informative. When a 404 error occurs, this may be because that the song does not exist in Genius. Or, that the song is actually an instrumental which is the case here with Andrew Bird.
 
-```{r instrumental-warning, exercise = TRUE}
-album_lyrics %>% 
-  filter(track_title == "Yawny At The Apocalypse")
-```
-
 
 ### Albums and Songs
 
@@ -123,7 +118,29 @@ mixed_lyrics <- song_album %>%
 
 ## Self-similarity
 
-```{r song-self-sim, exercise=TRUE, exercise.lines = 10}
-calc_self_sim(floating, lyric, "tidy")
-calc_self_sim(floating, lyric, "matrix")
+Another feature of `genius` is the ability to create self-similarity matrices to visualize lyrical patterns within a song. This idea was taken from Colin Morris' wonderful javascript based [Song Sim](https://colinmorris.github.io/SongSim/#/gallery) project. Colin explains the interpretation of a self-similarity matrix in their [TEDx talk](https://www.youtube.com/watch?v=_tjFwcmHy5M). An even better description of the interpretation is available in [this post](https://colinmorris.github.io/blog/weird-pop-songs).
+
+To use Colin's example we will look at the structure of Ke$ha's Tik Tok.
+
+The function `calc_self_sim()` will create a self-similarity matrix of a given song. The main arguments for this function are the tibble (`df`), and the column containing the lyrics (`lyric_col`). Ideally this is one line per observation as is default from the output of `genius_*()`. The tidy output compares every ith word with every word in the song. This measures repetition of words and will show us the structure of the lyrics. 
+
+```{r song-self-sim, exercise=TRUE}
+tik_tok <- genius_lyrics("Ke$ha", "Tik Tok")
+
+tt_self_sim <- calc_self_sim(tik_tok, lyric, output = "tidy")
+
+tt_self_sim
+
+tt_self_sim %>% 
+  ggplot(aes(x = x_id, y = y_id, fill = identical)) +
+  geom_tile() +
+  scale_fill_manual(values = c("white", "black")) +
+  theme_minimal() +
+  theme(legend.position = "none",
+        axis.text = element_blank()) +
+  scale_y_continuous(trans = "reverse") +
+  labs(title = "Tik Tok", subtitle = "Self-similarity matrix", x = "", y = "", 
+       caption = "The matrix displays that there are three choruses with a bridge between the last two. The bridge displays internal repetition.")
 ```
+
+
