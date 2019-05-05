@@ -23,15 +23,18 @@
 #' @importFrom tibble as_tibble
 
 calc_self_sim <- function(df, lyric_col, output = "tidy", remove_stop_words = FALSE, language = "en", source = "snowball") {
-  lyric_vec <- df %>%
-    unnest_tokens(word, lyric) %>% {
-      if (remove_stop_words) {
-        anti_join(., get_stopwords(language = language, source = source)) %>%
-          pull(word)
-      } else {
-        pull(word)
-      }
-    }
+  lyric_col <- enquo(lyric_col)
+  lyric_vec <- if (remove_stop_words) {
+    df %>%
+      unnest_tokens(word, !!lyric_col) %>%
+      anti_join(get_stopwords(language = language, source = source)) %>%
+      pull(word)
+  } else {
+    df %>%
+      unnest_tokens(word, !!lyric_col) %>%
+      pull(word)
+  }
+
 
   # calculate matrix dimensions
   mat_size <- length(lyric_vec)

@@ -1,0 +1,129 @@
+---
+title: "genius tutorial"
+output: learnr::tutorial
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(genius)
+library(tidyverse)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## Introducing genius
+
+You want to start analysing song lyrics, where do you go? There have been music information retrieval papers written on the topic of programmatically extracting lyrics from the web. Dozens of people have gone through the laborious task of scraping song lyrics from websites. Even a recent winner of the Shiny competition scraped lyrics from Genius.com. 
+
+I too have been there. Scraping websites is not always the best use of your time. `genius` is an R package that will enable you to programatically download song lyrics in a tidy format ready for analysis. To begin using the package, it first must be installed, and loaded. In addition to `genius`, we will need our standard data manipulation tools from the `tidyverse`.
+
+
+```{r installing-genius, exercise=TRUE, exercise.lines = 5, eval=FALSE}
+install.packages("genius")
+```
+
+```{r loading-genius, exercise=TRUE, exercise.lines = 3}
+library(genius)
+library(tidyverse)
+```
+
+
+## Single song lyrics
+
+The simplest method of extracting song lyrics is to get just a single song at a time. This is done with the `genius_lyrics()` function. It takes two main arguments: `artist` and `song`. These are the quoted name of the artist and song. Additionally there is a third argument `info` which determines what extra metadata you can get. The possible values are `title`, `simple`, `artist`, `features`, and `all`. I recommend trying them all to see how they work. 
+
+In this example we will work to retrieve the song lyrics for the upcoming musician [Renny Conti](https://rennyconti.bandcamp.com).
+
+
+```{r single-song, exercise=TRUE, exercise.lines = 5}
+floating <- genius_lyrics("renny conti", "people floating")
+floating
+```
+
+## Album Lyrics
+
+Now that you have the intuition for obtaining lyrics for a single song, we can now create a larger dataset for the lyrics of an entire album  using `genius_album()`. Similar to `genius_lyrics()`, the arguments are `artist`, `album`, and `info`.
+
+In the exercise below the lyrics for [Snail Mail's](https://www.snailmail.band/) album Lush. Try retrieving the lyrics for an album of your own choosing. 
+
+```{r genius_album, exercise=TRUE, exercise.lines = 5}
+lush <- genius_album("Snail Mail", "Lush")
+lush
+```
+
+## Adding Lyrics to a data frame
+
+
+### Multiple songs
+
+A common use for lyric analysis is to compare the lyrics of one artist to another. In order to do that, you could potentially retrieve the lyrics for multiple songs and albums and then join them together. This has one major issue in my mind, it makes you create multiple object taking up precious memory. For this reason, the function `add_genius()` was developed. This enables you to create a tibble with a column for an artists name and their album or song title. `add_genius()` will then go through the entire tibble and add song lyrics for the tracks and albums that are available. 
+
+Let's try this with a tibble of three songs.
+
+```{r songs-add-genius, exercise = TRUE}
+three_songs <- tribble(
+  ~ artist, ~ title,
+  "Big Thief", "UFOF",
+  "Andrew Bird", "Imitosis",
+  "Sylvan Esso", "Slack Jaw"
+)
+
+song_lyrics <- three_songs %>% 
+  add_genius(artist, title, type = "lyrics")
+
+song_lyrics %>% 
+  count(artist)
+
+```
+
+
+### Multiple albums
+
+`add_genius()` also extends this functionality to albums. 
+
+```{r albums-add-genius, exercise = TRUE}
+albums <- tribble(
+  ~ artist, ~ title,
+  "Andrew Bird", "Armchair Apocrypha",
+  "Andrew Bird", "Things are really great here sort of"
+)
+
+album_lyrics <- albums %>% 
+  add_genius(artist, title, type = "album")
+
+album_lyrics
+```
+
+What is important to note here is that the warnings for this function are somewhat informative. When a 404 error occurs, this may be because that the song does not exist in Genius. Or, that the song is actually an instrumental which is the case here with Andrew Bird.
+
+```{r instrumental-warning, exercise = TRUE}
+album_lyrics %>% 
+  filter(track_title == "Yawny At The Apocalypse")
+```
+
+
+### Albums and Songs
+
+In the scenario that you want to mix single songs and lyrics, you can supply a column with the type value of each row. The example below illustrates this. First a tibble with artist, track or album title, and type columns are created. Next, the tibble is piped to `add_genius()` with the unquote column names for the artist, title, and type columns. This will then iterate over each row and fetch the appropriate song lyrics.
+
+```{r mixed-add-genius, exercise=TRUE}
+song_album <- tribble(
+  ~ artist, ~ title, ~ type,
+  "Big Thief", "UFOF", "lyrics",
+  "Andrew Bird", "Imitosis", "lyrics",
+  "Sylvan Esso", "Slack Jaw", "lyrics",
+  "Movements", "Feel Something", "album"
+)
+
+mixed_lyrics <- song_album %>% 
+  add_genius(artist, title, type)
+```
+
+
+## Self-similarity
+
+```{r song-self-sim, exercise=TRUE, exercise.lines = 10}
+calc_self_sim(floating, lyric, "tidy")
+calc_self_sim(floating, lyric, "matrix")
+```
