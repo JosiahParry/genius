@@ -1,3 +1,7 @@
+if (getRversion() >= "2.15.1")  {
+  utils::globalVariables(c("Var1", "Var2", "value", "word", "x_id", "y_id"))
+}
+
 #' Calculate a self-similarity matrix
 #'
 #' Calculate the self-similarity matrix for song lyrics.

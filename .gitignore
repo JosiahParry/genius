@@ -11,3 +11,6 @@ CRAN-RELEASE
 genius-similarity
 README.Rmd
 dev
+
+docs
+tests

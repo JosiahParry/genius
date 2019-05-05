@@ -1,5 +1,4 @@
 ^cran-comments\.md$
-^README\.Rmd$
 ^README\.md$
 ^CRAN-RELEASE$
 ^Readme\.md$
@@ -10,3 +9,10 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
+^docs$
+^tests$
+^vignettes$
+^vignettes/genius_basics\.Rmd$
+^genius-similarity$
+^genius-similarity/app\.R$
+^README\.Rmd$
