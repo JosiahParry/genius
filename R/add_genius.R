@@ -39,7 +39,7 @@
 add_genius <- function(data, artist, title, type = "album") {
   genius_funcs <- list(album = possible_album, lyrics = possible_lyrics)
   artist <- enquo(artist)
-  type_group <- enquo(type_group)
+  title <- enquo(title)
   type <- enquo(type)
 
 
