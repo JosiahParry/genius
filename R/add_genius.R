@@ -42,17 +42,16 @@ add_genius <- function(data, artist, title, type = "album") {
   title <- enquo(title)
   type <- enquo(type)
 
+  songs <- filter(data, !!type == "lyrics")
+  albums <- filter(data, !!type == "album")
 
-  data %>%
-    mutate(lyrics = case_when(
-      !!type == "album" ~ map2(.x = !!artist, .y = !!title, genius_funcs[["album"]]),
-      !!type == "lyrics" ~ map2(.x = !!artist, .y = !!title, genius_funcs[["lyrics"]])
-    )
-    ) %>%
+  song_lyrics <- mutate(songs, lyrics = map2(.x = !!artist, .y = !!title, genius_funcs[["lyrics"]]))
+  album_lyrics <- mutate(albums, lyrics = map2(.x = !!artist, .y = !!title, genius_funcs[["album"]]))
+
+  bind_rows(song_lyrics, album_lyrics) %>%
     inner_join(data) %>%
     unnest() %>%
     as_tibble() %>%
     return()
 
 }
-

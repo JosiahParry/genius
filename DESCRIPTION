@@ -17,7 +17,9 @@ Imports:
   tidyr,
   purrr,
   readr, 
-  tibble
+  tibble,
+  tidytext,
+  reshape2
 License: GPL-2
 Encoding: UTF-8
 LazyData: true
