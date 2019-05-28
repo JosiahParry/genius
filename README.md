@@ -5,7 +5,7 @@ Quickstart: genius
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/genius?color=d3a167)](https://r-pkg.org/pkg/genius)
 [![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
 
-This package was created to provide an easy method to access lyrics as text data using [Genius](genius.com).
+This package was created to provide an easy method to access lyrics as text data using [Genius](https://genius.com).
 
 Access to this code as an API or via Python [here](https://github.com/JosiahParry/genius-api)
 
@@ -280,4 +280,4 @@ Getting lyrics for albums is slightly more involved. It first calls `genius_trac
 
 As this is my first *"package"* there will be many issues. Please submit an issue and I will do my best to attend to it.
 
-There are already issues of which I am present (the lack of error handling). If you would like to take those on, please go ahead and make a pull request. Please contact me on [Twitter](twitter.com/josiahparry).
+There are already issues of which I am present (the lack of error handling). If you would like to take those on, please go ahead and make a pull request. Please contact me on [Twitter](https://twitter.com/josiahparry).
