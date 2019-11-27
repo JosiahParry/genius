@@ -1,3 +1,11 @@
+## `genius` v.2.2.1
+
+Nov 27th, 2019
+
+* Thank you to [\@mine-cetinkaya-rundel](https://github.com/mine-cetinkaya-rundel) for noting changes to `tidyr::unnest()` producing unwanted warnings in `add_genius()`. This has been fixed
+
+
+
 ## `genius` v.2.2.0
 
 May 5th, 2019
@@ -11,6 +19,7 @@ May 4th, 2019
 * New functionality was added to `genius`. The function `calc_self_sim()` enables the user to create a self-similarity matrix. The default output is a _tidy_ data-frame that is ready for plotting. Additional arguments can be used to remove stop words. Stop word functionality is accessed via the [`tidytext`](https://github.com/juliasilge/tidytext) package. 
 * `add_genius()` has been modified to be able to accept a column for the `type`. This will enable you to mix both single songs with entire albums. The `type_group` column has been renamed to `title` to be more coherent. This is a potentially breaking change to existing code. 
   * Changes to `add_genius()` were checked for `spotifyr` reverse dependencies. Results returned 0 errors. All should be good. 
+  
 ----------
 ## `genius` v.2.1.0
 
