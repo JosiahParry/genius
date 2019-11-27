@@ -1,6 +1,6 @@
 #' Add lyrics to a data frame
 #'
-#' This function is to be used to build on a data frame with artist and album/track information. Ideal via the spotifyr package.
+#' This function is to be used to build on a data frame with artist and album/track information. To use the function with a data frame of mixed type (albums and tracks), create another column that specifies type. The type values are `"album"`and `"lyrics"`.
 #'
 #' @param data This is a dataframe with one column for the artist name, and the other column being either the track title or the album title.
 #' @param artist This is the column which has artist title information
@@ -9,32 +9,36 @@
 #'
 #' @examples
 #' \donttest{
+#' # Albums only
+#'
 #' artist_albums <- tribble(
 #'  ~artist, ~album,
 #'  "J. Cole", "KOD",
 #'  "Sampha", "Process"
-#')
-#'
-#'
-#'artist_albums %>%
+#')  %>%
 #'  add_genius(artist, album)
 #'
-
+#' # Individual Tracks only
+#'
 #' artist_songs <- tribble(
 #'  ~artist, ~track,
 #'  "J. Cole", "Motiv8",
 #'  "Andrew Bird", "Anonanimal"
-#' )
-#'
-#' artist_songs %>%
+#' ) %>%
 #'  add_genius(artist, track, type = "lyrics")
 #'}
+#'
+#' # Tracks and Albums
+#' mixed_type <- tribble(
+#'   ~artist, ~album, ~type,
+#'   "J. Cole", "KOD", "album",
+#'   "Andrew Bird", "Proxy War", "lyrics"
+#' ) %>%
+#'   add_genius(artist, album, type)
 #'
 #' @export
 #' @import dplyr
 #' @import purrr
-#'
-#'
 
 add_genius <- function(data, artist, title, type = "album") {
   genius_funcs <- list(album = possible_album, lyrics = possible_lyrics)
@@ -50,7 +54,7 @@ add_genius <- function(data, artist, title, type = "album") {
 
   bind_rows(song_lyrics, album_lyrics) %>%
     inner_join(data) %>%
-    unnest() %>%
+    unnest(lyrics) %>%
     as_tibble() %>%
     return()
 
