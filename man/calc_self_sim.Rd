@@ -4,8 +4,14 @@
 \alias{calc_self_sim}
 \title{Calculate a self-similarity matrix}
 \usage{
-calc_self_sim(df, lyric_col, output = "tidy",
-  remove_stop_words = FALSE, language = "en", source = "snowball")
+calc_self_sim(
+  df,
+  lyric_col,
+  output = "tidy",
+  remove_stop_words = FALSE,
+  language = "en",
+  source = "snowball"
+)
 }
 \arguments{
 \item{df}{The data frame containing song lyrics. Usually from the output of \code{`genius_lyrics()`}.}
