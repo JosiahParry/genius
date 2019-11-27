@@ -16,28 +16,35 @@ add_genius(data, artist, title, type = "album")
 \item{type}{This is a single value character string of either "album" or "lyrics". This tells the function what kind of lyrics to pull. Alternatively, this can be a column with the value of "album" or "lyrics" associated with each row.}
 }
 \description{
-This function is to be used to build on a data frame with artist and album/track information. Ideal via the spotifyr package.
+This function is to be used to build on a data frame with artist and album/track information. To use the function with a data frame of mixed type (albums and tracks), create another column that specifies type. The type values are `"album"`and `"lyrics"`.
 }
 \examples{
 \donttest{
+# Albums only
+
 artist_albums <- tribble(
  ~artist, ~album,
  "J. Cole", "KOD",
  "Sampha", "Process"
-)
-
-
-artist_albums \%>\%
+)  \%>\%
  add_genius(artist, album)
+
+# Individual Tracks only
 
 artist_songs <- tribble(
  ~artist, ~track,
  "J. Cole", "Motiv8",
  "Andrew Bird", "Anonanimal"
-)
-
-artist_songs \%>\%
+) \%>\%
  add_genius(artist, track, type = "lyrics")
 }
+
+# Tracks and Albums
+mixed_type <- tribble(
+  ~artist, ~album, ~type,
+  "J. Cole", "KOD", "album",
+  "Andrew Bird", "Proxy War", "lyrics"
+) \%>\%
+  add_genius(artist, album, type)
 
 }
