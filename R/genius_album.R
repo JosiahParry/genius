@@ -6,13 +6,13 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("track_url", "lyrics"))
 #'
 #' @param artist The quoted name of the artist. Spelling matters, capitalization does not.
 #' @param album The quoted name of the album Spelling matters, capitalization does not.
-#' @param info Return extra information about each song. Default `"simple"` returns `title`, `track_n`, and `text`. Set `info = "artist"` for artist and track title. See args to `genius_lyrics()`.
+#' @param info Return extra information about each song. Default `"simple"` returns title`, `track_n`, and `text`. Set `info = "artist"` for artist and track title and `info = "all"` for all possible columns plus adds the album name. See args to `genius_lyrics()`.
 #'
 #' @examples
 #'
 #'\dontrun{
 #' genius_album(artist = "Petal", album = "Comfort EP")
-#' genius_album(artist = "Fit For A King", album = "Deathgrip")
+#' genius_album(artist = "Fit For A King", album = "Deathgrip", info = "all")
 #'}
 #'
 #' @export
@@ -27,10 +27,12 @@ genius_album <- function(artist = NULL, album = NULL, info = "simple") {
 
   album <- tracks %>%
     mutate(lyrics = map(track_url, possible_url, info)) %>%
+    select(-track_title) %>%
     unnest(lyrics) %>%
     right_join(tracks) %>%
     select(-track_url)
 
+  if(info != "all"){album <- album %>% select(-album_name)}
 
   return(album)
 }
