@@ -3,7 +3,8 @@ Title: Easily access song lyrics from Genius.com
 Version: 2.2.1
 Authors@R: c(
   person("Josiah", "Parry", email = "josiah.parry@gmail.com", role = c("aut", "cre")),
-  person("Nathan", "Barr", email = "nab222@cornell.edu", role = "ctb")
+  person("Nathan", "Barr", email = "nab222@cornell.edu", role = "ctb"),
+  person("Chris", "Billingham", email = "chris.billingham@gmail.com", role = "ctb")
   )
 Description: Easily access song lyrics in a tidy way.
 URL: https://github.com/josiahparry/genius

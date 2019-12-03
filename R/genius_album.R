@@ -6,7 +6,15 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("track_url", "lyrics"))
 #'
 #' @param artist The quoted name of the artist. Spelling matters, capitalization does not.
 #' @param album The quoted name of the album Spelling matters, capitalization does not.
-#' @param info Return extra information about each song. Default `"simple"` returns title`, `track_n`, and `text`. Set `info = "artist"` for artist and track title and `info = "all"` for all possible columns plus adds the album name. See args to `genius_lyrics()`.
+#' @param info Return track level metadata. See details.
+#'
+#' @details
+#' The `info` argument returns additional columns to the returned tibble:
+#' `"simple"` returns only the song lyrics.
+#' `"title"` returns the track title and lyrics.
+#' `"artist"` returns the lyrics and artist.
+#' `"features"` returns the lyrics, song elements, and element artists.
+#' `"all"` returns all of the above mentioned, plus appends the album name.
 #'
 #' @examples
 #'
