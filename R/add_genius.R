@@ -52,10 +52,14 @@ add_genius <- function(data, artist, title, type = "album") {
   song_lyrics <- mutate(songs, lyrics = map2(.x = !!artist, .y = !!title, genius_funcs[["lyrics"]]))
   album_lyrics <- mutate(albums, lyrics = map2(.x = !!artist, .y = !!title, genius_funcs[["album"]]))
 
-  bind_rows(song_lyrics, album_lyrics) %>%
+
+  bind_rows(
+    album_lyrics %>%
+      unnest(lyrics),
+    song_lyrics %>%
+      unnest(lyrics)
+  ) %>%
     inner_join(data) %>%
-    unnest(lyrics) %>%
-    as_tibble() %>%
-    return()
+    as_tibble()
 
 }
