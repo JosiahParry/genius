@@ -7,7 +7,7 @@ Quickstart: genius
 
 This package was created to provide an easy method to access lyrics as text data using [Genius](https://genius.com).
 
-Access to this code as an API or via Python [here](https://github.com/JosiahParry/genius-api)
+Access to genius as an API or via Python [here](https://github.com/JosiahParry/genius-api)
 
 Installation
 ------------
@@ -23,6 +23,12 @@ Load the package:
 ``` r
 library(genius)
 library(tidyverse)
+```
+
+Get started with a tutorial! 
+
+```r 
+learnr::run_tutorial("genius_tutorial", "genius")
 ```
 
 Getting Lyrics

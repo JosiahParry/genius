@@ -2,6 +2,8 @@
 
 Dec 15th, 2019
 
+* `add_genius()` now unnests lyrics prior to joining. This ought to reduce the number of errors.
+* updates to `tidyr::unnest()` broke functions in many situations. Thank you to [\@eoppe1022](https://github.com/eoppe1022) for pointing out `tidyr::unnest_legacy()`. The legacy version will be used internally for now. 
 * Thank you to [\@chris-billingham](https://github.com/chris-billingham) for noting issues with the `info = "title"` and `info = "all"` arguments of `genius_album()` and fixing these whilst also adding album_name into the output from `genius_album(..., info = "all")`.
 * Belated thank you to [\@eoppe1022](https://github.com/eoppe1022) for help with `prep_info()` in earlier releases. Evan has been added as a contributor.
 
