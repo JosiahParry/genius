@@ -21,6 +21,10 @@ genius_tracklist <- function(artist = NULL, album = NULL) {
   url <- gen_album_url(artist, album)
   session <- html_session(url)
 
+  # Get the album name
+  album_name <- html_nodes(session, ".header_with_cover_art-primary_info-title") %>%
+    html_text()
+
   # Get track numbers
   # Where there are no track numbers, it isn't a song
   track_numbers <- html_nodes(session, ".chart_row-number_container-number") %>%
@@ -45,6 +49,7 @@ genius_tracklist <- function(artist = NULL, album = NULL) {
   # Create df for easy filtering
   # Filter to find only the actual tracks, the ones without a track number were credits / booklet etc
   df <- tibble(
+    album_name = album_name,
     track_title = track_titles,
     track_n = as.integer(track_numbers),
     track_url = track_url

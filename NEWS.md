@@ -2,7 +2,8 @@
 
 Nov 27th, 2019
 
-* Thank you to [\@mine-cetinkaya-rundel](https://github.com/mine-cetinkaya-rundel) for noting changes to `tidyr::unnest()` producing unwanted warnings in `add_genius()`. This has been fixed
+* Thank you to [\@mine-cetinkaya-rundel](https://github.com/mine-cetinkaya-rundel) for noting changes to `tidyr::unnest()` producing unwanted warnings in `add_genius()`. This has been fixed.
+* Thank you to [\@chris-billingham](https://github.com/chris-billingham) for noting issues with the `info = "title"` and `info = "all"` arguments of `genius_album()` and fixing these whilst also adding album_name into the output from `genius_album(..., info = "all")`.
 
 
 
