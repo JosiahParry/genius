@@ -1,5 +1,11 @@
 ## `genius` v.2.2.1
 
+Dec 16th, 2019
+
+* Created a Code of Conduct
+* Changed license from GPL-2 to MIT
+
+
 Dec 15th, 2019
 
 * `add_genius()` now unnests lyrics prior to joining. This ought to reduce the number of errors.
