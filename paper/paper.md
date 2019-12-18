@@ -25,7 +25,7 @@ Music is a rather unique phenomenon. One song can be considered a dataset with m
 
 `genius` is an R package that provides a consistent interface for acquiring song lyrics in R. The package was developed with tidy data principles in mind [@tidydata; @tidytext]. As such, the toolkit that `genius` provides integrates with the tidy text framework. `genius` functionality returns one-token-per-document-per-row where each token is a line of a song. This adherance to tidy text principles allows users to transition between tidy and alternative text analysis frameworks.
 
-As song lyrics are only one aspect of music, it is often useful to acquire audio features and metadata as well. To this end, `genius` has been integrated with the `spotifyr` packge [@spotifyr]. This integration, for example, enables researchers to fetch a single artist's discography with audio features and lyrics in a matter of seconds. 
+As song lyrics are only one aspect of music, it is often useful to acquire audio features and metadata as well. To this end, `genius` has been integrated with the `spotifyr` package [@spotifyr]. This integration, for example, enables researchers to fetch a single artist's discography with audio features and lyrics in a matter of seconds. 
 
 By providing a robust and consistent framework for acquiring song lyrics, `genius` aids researchers by drastically reducing the amount of time and effort spent in collecting, cleaning, and preparing song lyrics for analysis. 
 
