@@ -1,5 +1,5 @@
 ---
-title: 'genius: acquiring analysis ready song lyrics'
+title: 'genius: analysis ready song lyric retrieval'
 tags:
   - R
   - music information retrieval
@@ -8,12 +8,10 @@ tags:
 authors:
   - name: Josiah Parry
     orcid: 0000-0001-9910-865X
-    affiliation: "1, 2" 
+    affiliation: 1
 affiliations:
  - name: Northeastern University, School of Public Policy and Urban Affairs
    index: 1
- - name: RStudio 2
-   index: 2
 date: 16 December 2019
 bibliography: index.bib
 ---
