@@ -40,7 +40,7 @@ genius_album <- function(artist = NULL, album = NULL, info = "simple") {
     right_join(tracks) %>%
     select(-track_url)
 
-  if(info != "all"){album <- album %>% select(-album_name)}
+  if(info != "all"){album <- album %>% select(-.data$album_name)}
 
   return(album)
 }
