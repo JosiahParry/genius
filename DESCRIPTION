@@ -1,6 +1,6 @@
 Package: genius
 Title: Easily access song lyrics from Genius.com
-Version: 2.2.1
+Version: 2.2.2
 Authors@R: c(
   person("Josiah", "Parry", email = "josiah.parry@gmail.com", role = c("aut", "cre")),
   person("Nathan", "Barr", email = "nab222@cornell.edu", role = c("aut", "ctb")),
@@ -21,11 +21,12 @@ Imports:
   readr, 
   tibble,
   tidytext,
-  reshape2
-License: MIT
+  reshape2,
+  rlang
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.1
+RoxygenNote: 7.1.0
 Suggests: 
     knitr,
     rmarkdown,

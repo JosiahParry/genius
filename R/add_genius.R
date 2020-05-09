@@ -5,48 +5,54 @@
 #' @param data This is a dataframe with one column for the artist name, and the other column being either the track title or the album title.
 #' @param artist This is the column which has artist title information
 #' @param title This is the column that has either album titles, track titles, or both.
-#' @param type This is a single value character string of either "album" or "lyrics". This tells the function what kind of lyrics to pull. Alternatively, this can be a column with the value of "album" or "lyrics" associated with each row.
+#' @param type This is a single value character string of either "album" or "track". This tells the function what kind of lyrics to pull. Alternatively, this can be a column with the value of "album" or "track" associated with each row. "lyric" can be used for backward compatibility.
 #'
 #' @examples
 #' \donttest{
 #' # Albums only
 #'
-#' artist_albums <- tribble(
+#' artist_albums <- tibble::tribble(
 #'  ~artist, ~album,
 #'  "J. Cole", "KOD",
 #'  "Sampha", "Process"
-#')  %>%
-#'  add_genius(artist, album)
+#')
+#'
+#'add_genius(artist_albums, artist, album)
 #'
 #' # Individual Tracks only
 #'
-#' artist_songs <- tribble(
+#' artist_songs <- tibble::tribble(
 #'  ~artist, ~track,
 #'  "J. Cole", "Motiv8",
 #'  "Andrew Bird", "Anonanimal"
-#' ) %>%
-#'  add_genius(artist, track, type = "lyrics")
+#' )
+#'
+#'add_genius(artist_songs, artist, track, type = "track")
 #'}
 #'
 #' # Tracks and Albums
-#' mixed_type <- tribble(
+#' mixed_type <- tibble::tribble(
 #'   ~artist, ~album, ~type,
 #'   "J. Cole", "KOD", "album",
-#'   "Andrew Bird", "Proxy War", "lyrics"
-#' ) %>%
-#'   add_genius(artist, album, type)
+#'   "Andrew Bird", "Proxy War", "track"
+#' )
+#'
+#'add_genius(mixed_type, artist, album, type)
 #'
 #' @export
-#' @import dplyr
-#' @import purrr
+#' @importFrom dplyr filter mutate bind_rows inner_join
+#' @importFrom tibble as_tibble
+#' @importFrom tidyr unnest
+#' @importFrom rlang enquo
+#' @importFrom purrr map2
 
-add_genius <- function(data, artist, title, type = "album") {
+add_genius <- function(data, artist, title, type = c("album", "track", "lyrics")) {
   genius_funcs <- list(album = possible_album, lyrics = possible_lyrics)
   artist <- enquo(artist)
   title <- enquo(title)
   type <- enquo(type)
 
-  songs <- filter(data, !!type == "lyrics")
+  songs <- filter(data, !!type %in% c("lyrics", "track"))
   albums <- filter(data, !!type == "album")
 
   song_lyrics <- mutate(songs, lyrics = map2(.x = !!artist, .y = !!title, genius_funcs[["lyrics"]]))
@@ -62,4 +68,5 @@ add_genius <- function(data, artist, title, type = "album") {
     inner_join(data) %>%
     as_tibble()
 
-}
+
+  }

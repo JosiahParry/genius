@@ -1,4 +1,13 @@
-## `genius` v.2.2.1
+## `genius` v2.2.2
+
+May 9th, 2020
+
+* genius was taken off of CRAN due to my failure to address failing examples. Thank you to the CRAN team for providing thorough explanation and forewarning. Thank you [\@Nicolas-Gallo](https://github.com/Nicolas-Gallo) for bringing this to my attention. This release closes [issue #48](https://github.com/JosiahParry/genius/issues/48).
+* The removal of genius from CRAN has had downstream consequences. Failure to update has led to the removal of spotifyr from CRAN as well due to the inclusion of genius in its `Imports`. This release will make it possible to publish spotifyr to CRANA again addressing spotifyr [issue #112](https://github.com/charlie86/spotifyr/issues/112).
+* `add_genius()`'s `type` argument took two values `"album"` and `"lyrics"`. This is logically inconsistent as we are specifying track titles not the lyrics. This is an attempt to create more continuity between the data that is returned from `genius_lyrics()` and `genius_album()`. I've introduced the argument value `"track"` which is to be preferred over `"lyrics"`. `"lyrics"` will remain a valid option to `type` for reverse compatability. 
+* Version bumped to 2.2.2.
+
+## `genius` v2.2.1
 
 Dec 16th, 2019
 
@@ -19,7 +28,7 @@ Nov 27th, 2019
 * Thank you to [\@mine-cetinkaya-rundel](https://github.com/mine-cetinkaya-rundel) for noting changes to `tidyr::unnest()` producing unwanted warnings in `add_genius()`. This has been fixed.
 
 
-## `genius` v.2.2.0
+## `genius` v2.2.0
 
 May 5th, 2019
 
@@ -34,7 +43,8 @@ May 4th, 2019
   * Changes to `add_genius()` were checked for `spotifyr` reverse dependencies. Results returned 0 errors. All should be good. 
   
 ----------
-## `genius` v.2.1.0
+
+## `genius` v2.1.0
 
 April 28th, 2019
 
@@ -43,7 +53,8 @@ April 28th, 2019
 
 
 -------------
-## `genius` v.2.0.0
+
+## `genius` v2.0.0
 April 10th, 2019
 
 The name of this package has been changed from `geniusR` to `genius` due to a name conflict on **CRAN**.
