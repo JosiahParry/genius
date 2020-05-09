@@ -169,7 +169,7 @@ memory_street
     ## 10 Memory Street    10 I'm at the gates                       
     ## # … with 17 more rows
 
-This returns a `tibble` with three columns `title`, `text`, and `line`. However, you can specifiy additional arguments to control the amount of information to be returned using the `info` argument.
+This returns a `tibble` with three columns `title`, `text`, and `line`. However, you can specify additional arguments to control the amount of information to be returned using the `info` argument.
 
 -   `info = "title"` (default): Return the lyrics, line number, and song title.
 -   `info = "simple"`: Return just the lyrics and line number.

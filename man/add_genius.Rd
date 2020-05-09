@@ -28,7 +28,7 @@ artist_albums <- tibble::tribble(
  "Sampha", "Process"
 )
 
-add_genius(artist_albums, artist, album)
+add_genius(artist_albums, artist, album, "album")
 
 # Individual Tracks only
 
