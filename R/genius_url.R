@@ -18,46 +18,40 @@ if(getRversion() >= "2.15.1")  {
 #' genius_url("https://genius.com/Head-north-in-the-water-lyrics", info = "all")
 #'
 #' @export
-#' @import dplyr
-#' @importFrom rvest html_session html_node
-#' @importFrom tidyr spread fill separate replace_na
-#' @importFrom stringr str_detect str_extract
-#' @importFrom readr read_lines
+#' @importFrom rvest session html_nodes html_node html_text
+#' @importFrom tidyr pivot_wider fill separate replace_na
+#' @importFrom stringr str_detect str_extract str_replace_all str_trim
+#' @importFrom tibble tibble
+#' @importFrom dplyr mutate bind_rows case_when filter group_by ungroup n row_number
+#' @importFrom purrr pluck
 
 genius_url <- function(url, info = "title")  {
   # create a new session for scraping lyrics
-  session <- html_session(url)
+  # create a new session for scraping lyrics
+  genius_session <- session(url)
 
   # Get Artist name
-  artist <- html_nodes(session, ".header_with_cover_art-primary_info-primary_artist") %>%
+  artist <- html_nodes(genius_session, ".SongHeader__Artist-sc-1b7aqpg-9") %>%
     html_text() %>%
     str_replace_all("\n", "") %>%
     str_trim()
 
   # Get Song title
-  song_title <- html_nodes(session, ".header_with_cover_art-primary_info-title") %>%
+  song_title <- html_nodes(genius_session, ".SongHeader__Title-sc-1b7aqpg-7") %>%
     html_text() %>%
     str_replace_all("\n", "") %>%
     str_trim()
 
   # scrape the lyrics
   lyrics <- # read the text from the lyrics class
-    html_node(session, ".lyrics") %>%
+    # read the text from the lyrics class
+    html_node(genius_session, ".Lyrics__Container-sc-1ynbvzw-6") %>%
     # trim white space
     html_text(trim = TRUE) %>%
     # use named vector for cleaning purposes
-    str_replace_all(cleaning()) %>% {
-      # sometimes there is only one line in a song
-      # if vector length == one it will try to read the text as a filepath
-      # add blank text if it that long
-      if (length(.) == 1) {
-        . <- c(.,"")
-      }
-    } %>%
-    # read lines into a data frame
-    read_lines() %>%
-
-
+    str_replace_all(cleaning()) %>%
+    strsplit(split = "\n") %>%
+    purrr::pluck(1) %>%
     # filter to only rows with content
     .[str_detect(., "[[:alnum:]]")] %>%
 
@@ -74,9 +68,11 @@ genius_url <- function(url, info = "title")  {
              case_when(
                str_detect(lyric, "\\[|\\]") ~ "meta",
                TRUE ~ "lyric")) %>%
-    spread(key = type, value = lyric) %>%
-    filter(!is.na(line)) %>%
-    fill(meta) %>%
+    pivot_wider(names_from = type, values_from = lyric) %>%
+
+    #spread(key = type, value = lyric)
+    dplyr::filter(!is.na(line)) %>%
+    fill(meta, .direction = "down") %>%
 
     #remove producer info
     #filter(!str_detect(lyric, "[Pp]roducer")) %>%
@@ -96,8 +92,8 @@ genius_url <- function(url, info = "title")  {
     # this is helpful to keep track of instrumentals
     group_by(element) %>%
 
-    # if there is only one line (meaning only elemnt info) keep the NA, else drop
-    filter(if_else(is.na(lyric) & n() > 1, FALSE, TRUE)) %>%
+    # if there is only one line (meaning only element info) keep the NA, else drop
+    filter(ifelse(is.na(lyric) & n() > 1, FALSE, TRUE)) %>%
     ungroup() %>%
 
     # create new line numbers incase they have been messed up
