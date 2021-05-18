@@ -42,5 +42,5 @@ genius_album <- function(artist = NULL, album = NULL, info = "simple") {
 
   if(info != "all"){album <- album %>% select(-.data$album_name)}
 
-  return(album)
+  album
 }
