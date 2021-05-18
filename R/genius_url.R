@@ -22,7 +22,6 @@ if(getRversion() >= "2.15.1")  {
 #' @importFrom rvest html_session html_node
 #' @importFrom tidyr spread fill separate replace_na
 #' @importFrom stringr str_detect str_extract
-#' @importFrom readr read_lines
 
 genius_url <- function(url, info = "title")  {
   # create a new session for scraping lyrics
@@ -46,17 +45,7 @@ genius_url <- function(url, info = "title")  {
     # trim white space
     html_text(trim = TRUE) %>%
     # use named vector for cleaning purposes
-    str_replace_all(cleaning()) %>% {
-      # sometimes there is only one line in a song
-      # if vector length == one it will try to read the text as a filepath
-      # add blank text if it that long
-      if (length(.) == 1) {
-        . <- c(.,"")
-      }
-    } %>%
-    # read lines into a data frame
-    read_lines() %>%
-
+    str_replace_all(cleaning()) %>%
 
     # filter to only rows with content
     .[str_detect(., "[[:alnum:]]")] %>%
