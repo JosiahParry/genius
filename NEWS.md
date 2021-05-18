@@ -1,3 +1,14 @@
+## `genius` v2.2.3
+
+As illustrated in [PR #55](https://github.com/JosiahParry/genius/pull/55), all functionality of genius had been broken due to the changes with genius
+
+This patch release
+
+- brings back full functionality of the package;
+- utilizes `pivot_wider()` instead of `spread()`;
+- removes `readr` as a dependency;
+- utilizes `session()` instead of `html_session()` from `{rvest}` since it has been superceded.
+
 ## `genius` v2.2.2
 
 May 9th, 2020
