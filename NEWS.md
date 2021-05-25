@@ -60,7 +60,7 @@ May 4th, 2019
 April 28th, 2019
 
 * Issue [27](https://github.com/JosiahParry/genius/issues/27) has been fixed. Thank you to [\@manadamoth](https://github.com/manandamoth) for bringing the issue to attention. `genius_album()` would fail when it encountered a url with missing lyrics. The solution was to create a safe version of the `genius_url()` function that is called from `genius_album()` instead of `genius_url()` directly. This means that the function will continue to work if a single track url doesn't. Those tracks will have any empty tibble (so after unnesting within `genius_album()` it returns a row of `NA`s).
-  * I am still trying to figure out how to customize the warning message from `purrr::possibly()`, if anyone knows how to do this, please let me know via issue or twitter ([\@josiahparry](http://twitter.com/josiahparry)).
+  * I am still trying to figure out how to customize the warning message from `purrr::possibly()`, if anyone knows how to do this, please let me know via issue or twitter ([\@josiahparry](https://twitter.com/josiahparry)).
 
 
 -------------
@@ -72,7 +72,7 @@ The name of this package has been changed from `geniusR` to `genius` due to a na
 
 This update makes some drastic changes to the base `genius_url()` function. It closes two long lasting pull requests [#4](https://github.com/JosiahParry/genius/issues/4), and [#12](https://github.com/JosiahParry/genius/issues/12).
 
-Big thanks to [\@natebarr64](https://github.com/natebarr64) for his pull request [#20](https://github.com/JosiahParry/geniusR/pull/20) that fixed issue #4. This PR also created a new feature. 
+Big thanks to [\@natebarr64](https://github.com/natebarr64) for his pull request [#20](https://github.com/JosiahParry/genius/pull/20) that fixed issue #4. This PR also created a new feature. 
 
 @natebarr64 create the argument `info = "features"` which will identify the song element and artist for that element if they are available. You can use this for `genius_url()`, `genius_lyrics()`, and `genius_album()`. 
 
