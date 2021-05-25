@@ -16,3 +16,6 @@
 ^genius-similarity$
 ^genius-similarity/app\.R$
 ^README\.Rmd$
+^CODE_OF_CONDUCT\.md$
+^LICENSE\.md$
+^paper$
