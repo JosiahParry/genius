@@ -1,5 +1,5 @@
 Package: genius
-Title: Easily Access Song Lyrics From Genius.com
+Title: Easily Access Song Lyrics from Genius.com
 Version: 2.2.3
 Authors@R: c(
   person("Josiah", "Parry", email = "josiah.parry@gmail.com", role = c("aut", "cre")),
