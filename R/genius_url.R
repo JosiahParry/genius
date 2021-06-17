@@ -45,7 +45,7 @@ genius_url <- function(url, info = "title")  {
   # scrape the lyrics
   lyrics <- # read the text from the lyrics class
     # read the text from the lyrics class
-    html_node(genius_session, ".Lyrics__Container-sc-1ynbvzw-6") %>%
+    html_node(genius_session, ".Lyrics__Container-sc-1ynbvzw-7") %>%
     # trim white space
     html_text(trim = TRUE) %>%
     # use named vector for cleaning purposes
