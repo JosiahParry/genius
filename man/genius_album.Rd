@@ -26,9 +26,9 @@ The `info` argument returns additional columns to the returned tibble:
 }
 \examples{
 
-\dontrun{
-genius_album(artist = "Petal", album = "Comfort EP")
-genius_album(artist = "Fit For A King", album = "Deathgrip", info = "all")
+\donttest{
+# genius_album(artist = "Petal", album = "Comfort EP")
+# genius_album(artist = "Fit For A King", album = "Deathgrip", info = "all")
 }
 
 }

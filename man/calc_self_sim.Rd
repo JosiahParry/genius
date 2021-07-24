@@ -31,9 +31,9 @@ Calculate the self-similarity matrix for song lyrics.
 }
 \examples{
 
-\dontrun{
-bad_habits <- genius_lyrics("Alix", "Bad Habits")
-self_sim <- calc_self_sim(bad_habits, lyric)
+\donttest{
+# bad_habits <- genius_lyrics("Alix", "Bad Habits")
+# self_sim <- calc_self_sim(bad_habits, lyric)
 }
 
 }

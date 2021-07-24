@@ -18,9 +18,9 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("track_url", "lyrics"))
 #'
 #' @examples
 #'
-#'\dontrun{
-#' genius_album(artist = "Petal", album = "Comfort EP")
-#' genius_album(artist = "Fit For A King", album = "Deathgrip", info = "all")
+#'\donttest{
+#' # genius_album(artist = "Petal", album = "Comfort EP")
+#' # genius_album(artist = "Fit For A King", album = "Deathgrip", info = "all")
 #'}
 #'
 #' @export

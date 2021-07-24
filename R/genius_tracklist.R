@@ -10,7 +10,7 @@ if(getRversion() >= "2.15.1")  utils::globalVariables(c("track_n"))
 #'
 #' @examples
 #'
-#' genius_tracklist(artist = "Andrew Bird", album = "Noble Beast")
+#' # genius_tracklist(artist = "Andrew Bird", album = "Noble Beast")
 #'
 #' @export
 #' @import dplyr

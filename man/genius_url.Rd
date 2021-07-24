@@ -15,9 +15,12 @@ genius_url(url, info = "title")
 This function is used inside of the `genius_lyrics()` function. Given a url to a song on Genius, this function returns a tibble where each row is one line. Pair this function with `gen_song_url()` for easier access to song lyrics.
 }
 \examples{
-url <- gen_song_url(artist = "Kendrick Lamar", song = "HUMBLE")
-genius_url(url)
+\donttest{
+#' genius_url("https://genius.com/Head-north-in-the-water-lyrics", info = "all")
 
-genius_url("https://genius.com/Head-north-in-the-water-lyrics", info = "all")
+# url <- gen_song_url(artist = "Kendrick Lamar", song = "HUMBLE")
 
+# genius_url(url)
+
+}
 }

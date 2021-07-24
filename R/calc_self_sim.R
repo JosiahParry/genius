@@ -15,9 +15,9 @@ if (getRversion() >= "2.15.1")  {
 #'
 #' @examples
 #'
-#'\dontrun{
-#' bad_habits <- genius_lyrics("Alix", "Bad Habits")
-#' self_sim <- calc_self_sim(bad_habits, lyric)
+#'\donttest{
+#' # bad_habits <- genius_lyrics("Alix", "Bad Habits")
+#' # self_sim <- calc_self_sim(bad_habits, lyric)
 #'}
 #'
 #' @export

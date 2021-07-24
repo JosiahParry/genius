@@ -16,6 +16,6 @@ Creates a `tibble` containing all track titles for a given artist and album. Thi
 }
 \examples{
 
-genius_tracklist(artist = "Andrew Bird", album = "Noble Beast")
+# genius_tracklist(artist = "Andrew Bird", album = "Noble Beast")
 
 }
