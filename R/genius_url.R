@@ -12,11 +12,14 @@ if(getRversion() >= "2.15.1")  {
 #' @param info Default \code{"title"}, returns the track title. Set to \code{"simple"} for only lyrics, \code{"artist"} for the lyrics and artist, \code{"features"} for song element and the artist of that element,  \code{"all"} to return artist, track, line, lyric, element, and element artist.
 #'
 #' @examples
-#' url <- gen_song_url(artist = "Kendrick Lamar", song = "HUMBLE")
-#' genius_url(url)
+#' \donttest{
+#' #' genius_url("https://genius.com/Head-north-in-the-water-lyrics", info = "all")
 #'
-#' genius_url("https://genius.com/Head-north-in-the-water-lyrics", info = "all")
+#' # url <- gen_song_url(artist = "Kendrick Lamar", song = "HUMBLE")
 #'
+#' # genius_url(url)
+#'
+#'}
 #' @export
 #' @importFrom rvest session html_nodes html_node html_text
 #' @importFrom tidyr pivot_wider fill separate replace_na
@@ -30,14 +33,36 @@ genius_url <- function(url, info = "title")  {
   # create a new session for scraping lyrics
   genius_session <- session(url)
 
+
+  # Container classes are frequently changing
+  # need to id class based on partial name matching
+  # get the classes of all children of divs to pattern match properly
+  class_names <- genius_session %>%
+    rvest::html_elements("div") %>%
+    rvest::html_children() %>%
+    rvest::html_attr("class") %>%
+    unique() %>%
+    stats::na.omit() %>%
+    stringr::str_split("[:space:]") %>%
+    unlist()
+
+  # fetch class names for song title artist and lyrics
+  # will need to add `.` for all of them
+  title_class <- class_names[stringr::str_detect(class_names, "SongHeader__Title")]
+  artist_class <- class_names[stringr::str_detect(class_names, "SongHeader__Artist")]
+  lyrics_class <- class_names[stringr::str_detect(class_names, "Lyrics__Container")]
+
+
+
+
   # Get Artist name
-  artist <- html_nodes(genius_session, ".SongHeader__Artist-sc-1b7aqpg-9") %>%
+  artist <- html_nodes(genius_session, paste0(".", artist_class)) %>%
     html_text() %>%
     str_replace_all("\n", "") %>%
     str_trim()
 
   # Get Song title
-  song_title <- html_nodes(genius_session, ".SongHeader__Title-sc-1b7aqpg-7") %>%
+  song_title <- html_nodes(genius_session, paste0(".", title_class)) %>%
     html_text() %>%
     str_replace_all("\n", "") %>%
     str_trim()
@@ -45,7 +70,7 @@ genius_url <- function(url, info = "title")  {
   # scrape the lyrics
   lyrics <- # read the text from the lyrics class
     # read the text from the lyrics class
-    html_node(genius_session, ".Lyrics__Container-sc-1ynbvzw-6") %>%
+    html_node(genius_session, paste0(".", lyrics_class)) %>%
     # trim white space
     html_text(trim = TRUE) %>%
     # use named vector for cleaning purposes
