@@ -1,5 +1,21 @@
-Quickstart: genius
-================
+
+## NOTE: genius no longer under development
+
+2021-10-31 
+
+After quite some time I have decided to no longer maintain or support the `genius` package. While this package serves a very important purpose from the perspective of music information retrieval, it lies in a grey legal area—web scraping. 
+
+Over the years genius.com has changed their web practices in such a way that makes it increasingly unreliable and difficult to scrape. 
+
+Why not use the API (as many have asked)? Because song lyrics are owned by the musicians themselves and as such, they cannot be provided via their API.
+
+
+I will be removing this package from CRAN. 
+
+
+------
+
+
 
 [![CRAN status](https://www.r-pkg.org/badges/version/genius)](https://cran.r-project.org/package=genius)
 [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/genius?color=d3a167)](https://r-pkg.org/pkg/genius)
